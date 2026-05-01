@@ -1,0 +1,68 @@
+<header class="header" [class.is-scrolled]="scrolled()" [class.is-menu-open]="menuOpen()" role="banner">
+  <div class="header__inner">
+    <a class="header__logo" href="#hero" aria-label="Maicon Machado · início" (click)="onLinkClick()">
+      <img src="logo2.png" alt="Logo" class="header__logo-img">
+    </a>
+
+    <nav class="header__nav" aria-label="Seções">
+      <ul #navList class="header__list">
+        @if (pill(); as p) {
+          <li class="header__pill" aria-hidden="true" [style.transform]="'translateX(' + p.left + 'px)'" [style.width.px]="p.width"></li>
+        }
+        @for (s of sections; track s.id) {
+          <li>
+            <a
+              #navLink
+              class="header__link"
+              [class.is-active]="activeId() === s.id"
+              [attr.data-id]="s.id"
+              [href]="'#' + s.id"
+              (click)="onLinkClick()"
+              >{{ s.label }}</a
+            >
+          </li>
+        }
+      </ul>
+    </nav>
+
+    <a class="header__cta" appMagnetic [strength]="0.25" [href]="'#' + cta.id" (click)="onLinkClick()">
+      <span>{{ cta.label }}</span>
+      <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+        <path
+          d="M5 12h14M13 5l7 7-7 7"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </a>
+
+    <button
+      type="button"
+      class="header__burger"
+      [attr.aria-expanded]="menuOpen()"
+      aria-label="Menu de navegação"
+      (click)="toggleMenu()"
+    >
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+
+  @if (menuOpen()) {
+    <div class="header__overlay" role="dialog" aria-modal="true">
+      <ul class="header__overlay-list">
+        @for (s of sections; track s.id; let i = $index) {
+          <li class="header__overlay-item" [style.--idx]="i">
+            <a [href]="'#' + s.id" (click)="onLinkClick()">{{ s.label }}</a>
+          </li>
+        }
+        <li class="header__overlay-item" [style.--idx]="sections.length">
+          <a [href]="'#' + cta.id" (click)="onLinkClick()">{{ cta.label }}</a>
+        </li>
+      </ul>
+    </div>
+  }
+</header>

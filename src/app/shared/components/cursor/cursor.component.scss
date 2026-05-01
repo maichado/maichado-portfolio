@@ -1,0 +1,56 @@
+.cursor {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10001;
+  mix-blend-mode: difference;
+}
+
+.cursor__dot,
+.cursor__ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  border-radius: var(--radius-full);
+  will-change: transform;
+}
+
+.cursor__dot {
+  width: var(--cursor-size);
+  height: var(--cursor-size);
+  margin: calc(var(--cursor-size) / -2) 0 0 calc(var(--cursor-size) / -2);
+  background: #fff;
+}
+
+.cursor__ring {
+  width: var(--cursor-ring);
+  height: var(--cursor-ring);
+  margin: calc(var(--cursor-ring) / -2) 0 0 calc(var(--cursor-ring) / -2);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  transition:
+    width var(--duration-base) var(--ease-out-quint),
+    height var(--duration-base) var(--ease-out-quint),
+    margin var(--duration-base) var(--ease-out-quint),
+    border-color var(--duration-base) ease,
+    opacity var(--duration-fast) ease;
+}
+
+.cursor__ring.is-hover {
+  --r: calc(var(--cursor-ring) * 1.7);
+  width: var(--r);
+  height: var(--r);
+  margin: calc(var(--r) / -2) 0 0 calc(var(--r) / -2);
+  border-color: var(--color-accent-bright);
+}
+
+.cursor__ring.is-pressed {
+  opacity: 0.6;
+  border-width: 2px;
+}
+
+@media (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .cursor {
+    display: none;
+  }
+}

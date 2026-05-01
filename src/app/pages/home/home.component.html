@@ -1,0 +1,32 @@
+<a class="skip-link" href="#main">Ir para o conteúdo</a>
+<app-site-header />
+
+<main id="main" class="home">
+  <app-hero />
+
+  @defer (on viewport; prefetch on idle) {
+    <app-skills />
+  } @placeholder {
+    <div class="home__placeholder" aria-hidden="true"></div>
+  }
+
+  @defer (on viewport; prefetch on idle) {
+    <app-projects />
+  } @placeholder {
+    <div class="home__placeholder" aria-hidden="true"></div>
+  }
+
+  @defer (on viewport) {
+    <app-about />
+  } @placeholder {
+    <div class="home__placeholder" aria-hidden="true"></div>
+  }
+
+  @defer (on viewport) {
+    <app-contact />
+  } @placeholder {
+    <div class="home__placeholder" aria-hidden="true"></div>
+  }
+</main>
+
+<app-footer />
