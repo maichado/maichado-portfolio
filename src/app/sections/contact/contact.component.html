@@ -1,0 +1,69 @@
+<section class="contact" id="contato" appSectionAnchor="contato" aria-labelledby="contact-heading">
+  <div class="contact__inner">
+    <p class="contact__kicker" appReveal>
+      <span class="contact__kicker-num">04</span>
+      <span>Contato</span>
+    </p>
+
+    <h2 id="contact-heading" class="contact__title" appReveal [delay]="80">
+      Vamos construir algo <em>extraordinário</em>?
+    </h2>
+
+    <p class="contact__lead" appReveal [delay]="160">
+      Resposta ágil para liderança técnica, arquitetura frontend e projetos digitais críticos.
+    </p>
+
+    <a class="contact__email" appMagnetic [strength]="0.18" [href]="links.email" appReveal [delay]="240">
+      <span class="contact__email-label">e-mail direto</span>
+      <span class="contact__email-value">
+        {{ emailDisplay }}
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+          <path
+            d="M7 17 17 7M9 7h8v8"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </span>
+    </a>
+
+    <ul class="contact__socials" appReveal [delay]="320">
+      <li>
+        <a class="social" appMagnetic [strength]="0.3" [href]="links.linkedIn" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+            <path
+              d="M4 4h4v16H4zM6 2.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4ZM10 8h4v2.2c.7-1.3 2.4-2.5 4.5-2.5 4.6 0 5.5 3 5.5 6.8V20h-4v-4.7c0-2.1 0-4.8-2.9-4.8-2.9 0-3.4 2.3-3.4 4.7V20h-4Z"
+              fill="currentColor"
+            />
+          </svg>
+          <span>LinkedIn</span>
+        </a>
+      </li>
+      <li>
+        <a class="social" appMagnetic [strength]="0.3" [href]="links.github" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+            <path
+              d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.99 1.03-2.69-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.5 9.5 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.6 1.03 2.69 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"
+              fill="currentColor"
+            />
+          </svg>
+          <span>GitHub</span>
+        </a>
+      </li>
+      <li>
+        <a class="social" appMagnetic [strength]="0.3" [href]="links.whatsApp" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+            <path
+              d="M20.5 3.5A10.4 10.4 0 0 0 3.6 16.3L2 22l5.9-1.5A10.4 10.4 0 1 0 20.5 3.5Zm-8.4 16a8.3 8.3 0 0 1-4.3-1.2l-.3-.2-3.5.9.9-3.4-.2-.3a8.4 8.4 0 1 1 7.4 4.2Zm4.7-6.3c-.3-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1c-.2.2-.3.2-.5.1-1.4-.7-2.4-1.3-3.4-2.9-.2-.4.2-.4.6-1.2.1-.2 0-.3 0-.5l-.8-1.9c-.2-.4-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2 0 1.3.9 2.6 1.1 2.7 0 .2 1.8 2.7 4.4 3.8 1.6.7 2.3.7 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2-.1-.1-.3-.2-.5-.3Z"
+              fill="currentColor"
+            />
+          </svg>
+          <span>WhatsApp</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</section>

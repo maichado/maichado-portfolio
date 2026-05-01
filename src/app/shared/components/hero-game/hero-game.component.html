@@ -1,0 +1,115 @@
+<figure class="hg" #wrapper data-cursor aria-label="Mini jogo de desvio">
+  <header class="hg__header">
+    <span class="hg__label">
+      <span class="hg__dot" aria-hidden="true"></span>
+      hero.game
+    </span>
+
+    <div class="hg__right">
+      <span class="hg__best" aria-label="Melhor pontuação">best {{ best() }}</span>
+
+      <button type="button" class="hg__btn hg__btn--play" (click)="openModal()" aria-label="Jogar">
+        <svg viewBox="0 0 24 24" width="10" height="10" aria-hidden="true">
+          <path d="M8 5v14l11-7L8 5z" fill="currentColor" />
+        </svg>
+        <span>Play</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="hg__sub" aria-hidden="true">Desvie · 15s / 30s / 60s</div>
+
+  <span class="visually-hidden">
+    Mini jogo curto de desvio com pontuação. Use mouse ou toque para mover e evitar obstáculos.
+  </span>
+</figure>
+
+<!-- Modal central (quadrado maior) -->
+<div
+  class="hg-modal"
+  [class.is-open]="open()"
+  role="presentation"
+  (pointerdown)="onBackdrop($event)"
+>
+  <div class="hg-modal__dialog" role="dialog" aria-modal="true" aria-label="Hero game">
+    <header class="hg-modal__header">
+      <div class="hg-modal__title">
+        <span class="hg__dot" aria-hidden="true"></span>
+        hero.game
+      </div>
+      <div class="hg-modal__hud" aria-live="polite">
+        <span class="hg-modal__hud-item"><span class="k">t</span> {{ timeLeft() }}</span>
+        <span class="hg-modal__hud-item"><span class="k">score</span> {{ score() }}</span>
+        <span class="hg-modal__hud-item"><span class="k">best</span> {{ best() }}</span>
+      </div>
+      <button type="button" class="hg-modal__x" (click)="close()" aria-label="Fechar">
+        <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+          <path
+            d="M6 6l12 12M18 6L6 18"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+        </svg>
+      </button>
+    </header>
+
+    <div class="hg-modal__stage">
+      <canvas #canvas class="hg-modal__canvas" aria-hidden="true"></canvas>
+
+      @if (status() === 'over') {
+        <div class="hg__end" aria-live="polite">
+          <div class="hg__end-title">Você joga bem! Bora codar juntos?</div>
+          <div class="hg__end-sub">Score {{ score() }} · Best {{ best() }}</div>
+        </div>
+      }
+    </div>
+
+    <footer class="hg-modal__footer">
+      <div class="hg-modal__hint">
+        Mouse/touch move · <strong>desvie</strong> · near-miss = bônus
+      </div>
+      <div class="hg-modal__actions">
+        @if (status() === 'idle') {
+          <div class="hg-modal__difficulty" aria-label="Dificuldade">
+            <button
+              type="button"
+              class="hg-modal__pill"
+              [class.is-active]="durationMs() === 15000"
+              (click)="setDifficulty(15000)"
+            >
+              15s
+            </button>
+            <button
+              type="button"
+              class="hg-modal__pill"
+              [class.is-active]="durationMs() === 30000"
+              (click)="setDifficulty(30000)"
+            >
+              30s
+            </button>
+            <button
+              type="button"
+              class="hg-modal__pill"
+              [class.is-active]="durationMs() === 60000"
+              (click)="setDifficulty(60000)"
+            >
+              60s
+            </button>
+          </div>
+          <button type="button" class="hg-modal__btn hg-modal__btn--primary" (click)="start()">
+            Start
+          </button>
+        } @else {
+          <button type="button" class="hg-modal__btn" (click)="togglePause()" [disabled]="status() === 'over'">
+            {{ status() === 'paused' ? 'Resume' : 'Pause' }}
+          </button>
+          <button type="button" class="hg-modal__btn hg-modal__btn--primary" (click)="restart()">
+            Restart
+          </button>
+        }
+      </div>
+    </footer>
+  </div>
+</div>

@@ -1,0 +1,83 @@
+<section class="skills" id="skills" appSectionAnchor="skills" aria-labelledby="skills-heading">
+  <div class="skills__head">
+    <p class="skills__kicker" appReveal>
+      <span class="skills__kicker-num">01</span>
+      <span>Skills</span>
+    </p>
+    <h2 id="skills-heading" class="skills__title" appReveal [delay]="80">
+      Stack construída em <em>produção</em> — não em curso.
+    </h2>
+    <p class="skills__lead" appReveal [delay]="160">
+      Anos reais em sistemas com SLA, auditoria e times multidisciplinares.
+    </p>
+  </div>
+
+  <div class="skills__marquees" aria-hidden="true">
+    <ng-container *ngTemplateOutlet="row; context: { items: looped, dir: 'left' }"></ng-container>
+    <ng-container *ngTemplateOutlet="row; context: { items: loopedReversed, dir: 'right' }"></ng-container>
+  </div>
+
+  <ng-template #row let-items="items" let-dir="dir">
+    <div class="marquee" [class.marquee--right]="dir === 'right'">
+      <div class="marquee__track">
+        @for (s of items; track $index) {
+          <div class="chip" [attr.data-tech]="s.iconId">
+            <span class="chip__icon">
+              @switch (s.iconId) {
+                @case ('angular') {
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M12 2 3 5l1 13 8 4 8-4 1-13-9-3Z" stroke="currentColor" stroke-width="1.5" />
+                    <path d="M9 16l3-9 3 9M10 13h4" stroke="currentColor" stroke-width="1.5" />
+                  </svg>
+                }
+                @case ('flutter') {
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M14 3 5 12l3 3 9-9h-3Zm0 9-5 5 5 5h4l-5-5 5-5h-4Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+                  </svg>
+                }
+                @case ('react') {
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <ellipse cx="12" cy="12" rx="9" ry="3.5" stroke="currentColor" stroke-width="1.5" />
+                    <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(60 12 12)" stroke="currentColor" stroke-width="1.5" />
+                    <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(120 12 12)" stroke="currentColor" stroke-width="1.5" />
+                    <circle cx="12" cy="12" r="1.5" fill="currentColor" />
+                  </svg>
+                }
+                @case ('typescript') {
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.5" />
+                    <path d="M8 11h6M11 11v6M14 16c0 1 1 1.5 2 1.5s2-.5 2-1.5-1-1.3-2-1.5c-1-.2-2-.5-2-1.5s1-1.5 2-1.5 2 .5 2 1.5" stroke="currentColor" stroke-width="1.5" />
+                  </svg>
+                }
+                @case ('ionic') {
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.5" />
+                    <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.5" />
+                    <circle cx="18" cy="6" r="1.5" fill="currentColor" />
+                  </svg>
+                }
+                @default {
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <rect x="3" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5" />
+                    <rect x="14" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5" />
+                    <rect x="3" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5" />
+                    <rect x="14" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5" />
+                    <path d="M10 6.5h4M6.5 10v4M17.5 10v4M10 17.5h4" stroke="currentColor" stroke-width="1.5" />
+                  </svg>
+                }
+              }
+            </span>
+            <div class="chip__body">
+              <span class="chip__name">{{ s.name }}</span>
+              <span class="chip__sub">
+                <span class="chip__years">{{ s.years }}<span class="chip__unit">y</span></span>
+                <span class="chip__bullet">·</span>
+                <span class="chip__desc">{{ s.description }}</span>
+              </span>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </ng-template>
+</section>

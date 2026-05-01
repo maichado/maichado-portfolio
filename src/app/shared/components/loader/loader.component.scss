@@ -1,0 +1,118 @@
+:host {
+  display: contents;
+}
+
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  background: var(--color-bg);
+  padding: var(--space-8);
+  animation: loader-in 500ms var(--ease-out-quint) both;
+}
+
+@keyframes loader-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+:host-context(.loader-leaving) .loader,
+.loader.is-leaving {
+  animation: loader-out 600ms var(--ease-out-quint) forwards;
+}
+
+@keyframes loader-out {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.loader__brand {
+  position: absolute;
+  top: var(--space-8);
+  left: 50%;
+  translate: -50% 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.loader__mark {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: -0.02em;
+}
+
+.loader__divider {
+  width: 1px;
+  height: 14px;
+  background: var(--color-border-strong);
+}
+
+.loader__name {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.loader__bar {
+  width: min(420px, 70vw);
+  height: 1px;
+  background: var(--color-border);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.loader__fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-accent), var(--color-accent-bright));
+  box-shadow: 0 0 24px var(--color-accent-glow);
+  transition: width 80ms linear;
+}
+
+.loader__meta {
+  position: absolute;
+  bottom: var(--space-8);
+  left: 50%;
+  translate: -50% 0;
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+}
+
+.loader__pct {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+.loader__pct::after {
+  content: '%';
+  font-size: 0.65em;
+  color: var(--color-accent);
+  margin-left: 2px;
+}
+
+.loader__label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loader {
+    animation: none;
+  }
+}

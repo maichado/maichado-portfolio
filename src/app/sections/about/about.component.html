@@ -1,0 +1,71 @@
+<section class="about" id="sobre" appSectionAnchor="sobre" aria-labelledby="about-heading">
+  <div class="about__inner">
+    <div class="about__copy">
+      <p class="about__kicker" appReveal>
+        <span class="about__kicker-num">03</span>
+        <span>Sobre</span>
+      </p>
+
+      <h2 id="about-heading" class="about__title" appReveal [delay]="80">
+        Construo produtos críticos com <em>precisão</em> e <em>escala</em>.
+      </h2>
+
+      <div class="about__body">
+        <p appReveal [delay]="120">
+          Mais de <strong>6 anos</strong> de experiência em engenharia frontend, começando aos
+          <strong>17 anos</strong>. Trilhei empresas onde a entrega importa: <strong>Webmais</strong>,
+          <strong>Nexello</strong>, <strong>Pulsati</strong> e hoje <strong>Capgemini</strong> —
+          atuando no <strong>Bradesco</strong> como referência técnica em Angular e arquiteturas
+          distribuídas.
+        </p>
+
+        <blockquote class="about__quote" appReveal [delay]="200">
+          Fui convocado para os projetos mais críticos — não por acaso, mas por resultado.
+        </blockquote>
+      </div>
+
+      <div #timeline class="timeline">
+        <div class="timeline__rail" aria-hidden="true">
+          <div class="timeline__rail-fill"></div>
+        </div>
+
+        @for (m of milestones; track m.period) {
+          <div class="milestone">
+            <div class="milestone__dot" aria-hidden="true"></div>
+            <div class="milestone__content">
+              <p class="milestone__period">{{ m.period }}</p>
+              <p class="milestone__company">{{ m.company }}</p>
+              <p class="milestone__role">{{ m.role }}</p>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+    <aside class="about__visual" aria-hidden="true">
+      <div class="about__visual-frame" appTilt [tiltMax]="5" [tiltScale]="1.02">
+        <img src="profile.png" alt="Maicon Machado" class="about__photo">
+        <div class="about__visual-overlay"></div>
+      </div>
+
+      <div class="about__highlights" appReveal [delay]="220">
+        <div class="hl">
+          <span class="hl__num">6+</span>
+          <span class="hl__label">anos</span>
+        </div>
+        <div class="hl">
+          <span class="hl__num">10+</span>
+          <span class="hl__label">projetos</span>
+        </div>
+        <div class="hl">
+          <span class="hl__num">7+</span>
+          <span class="hl__label">microfrontends</span>
+        </div>
+        <div class="hl">
+          <span class="hl__num">90%+</span>
+          <span class="hl__label">cobertura</span>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>
