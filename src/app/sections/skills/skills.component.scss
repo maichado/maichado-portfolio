@@ -141,6 +141,9 @@
 .chip[data-tech='react'] .chip__icon { color: var(--tag-react); }
 .chip[data-tech='typescript'] .chip__icon { color: #6db1ff; }
 .chip[data-tech='ionic'] .chip__icon { color: var(--tag-ionic); }
+.chip[data-tech='kotlin'] .chip__icon { color: #7f52ff; }
+.chip[data-tech='githubActions'] .chip__icon { color: #2088ff; }
+.chip[data-tech='architecture'] .chip__icon { color: #c4b5fd; }
 
 .chip__body {
   display: flex;

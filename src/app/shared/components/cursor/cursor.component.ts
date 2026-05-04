@@ -10,10 +10,8 @@ import {
 } from '@angular/core';
 
 /**
- * Cursor customizado com lerp via requestAnimationFrame.
- * - Bolinha (dot) acompanha em tempo real.
- * - Anel (ring) interpola atrás com lag elegante.
- * - Reage a `a, button, [role=button], [data-cursor]`.
+ * Cursor global: moldura em cantoneiras (foco / recorte) com lag + pivô quadrado no ponteiro.
+ * Reage a `a, button, [role=button], [data-cursor]`.
  */
 @Component({
   selector: 'app-cursor',
@@ -26,7 +24,7 @@ export class CursorComponent implements OnDestroy {
   private readonly document = inject(DOCUMENT);
 
   protected readonly dot = viewChild.required<ElementRef<HTMLElement>>('dot');
-  protected readonly ring = viewChild.required<ElementRef<HTMLElement>>('ring');
+  protected readonly shell = viewChild.required<ElementRef<HTMLElement>>('shell');
 
   private rafId = 0;
   private mx = -100;
@@ -41,19 +39,19 @@ export class CursorComponent implements OnDestroy {
     this.mx = e.clientX;
     this.my = e.clientY;
   };
-  private readonly onDown = () => this.ring().nativeElement.classList.add('is-pressed');
-  private readonly onUp = () => this.ring().nativeElement.classList.remove('is-pressed');
+  private readonly onDown = () => this.shell().nativeElement.classList.add('is-pressed');
+  private readonly onUp = () => this.shell().nativeElement.classList.remove('is-pressed');
   private readonly onOver = (e: Event) => {
     const t = (e.target as HTMLElement | null)?.closest(
       'a, button, [role="button"], [data-cursor]',
     );
-    if (t) this.ring().nativeElement.classList.add('is-hover');
+    if (t) this.shell().nativeElement.classList.add('is-hover');
   };
   private readonly onOut = (e: Event) => {
     const t = (e.target as HTMLElement | null)?.closest(
       'a, button, [role="button"], [data-cursor]',
     );
-    if (t) this.ring().nativeElement.classList.remove('is-hover');
+    if (t) this.shell().nativeElement.classList.remove('is-hover');
   };
 
   constructor() {
@@ -72,17 +70,15 @@ export class CursorComponent implements OnDestroy {
       this.document.addEventListener('mouseout', this.onOut, true);
 
       const tick = () => {
-        // Dot — segue rápido (lerp 0.35)
         this.dx += (this.mx - this.dx) * 0.35;
         this.dy += (this.my - this.dy) * 0.35;
-        // Ring — lag suave (lerp 0.16)
         this.rx += (this.mx - this.rx) * 0.16;
         this.ry += (this.my - this.ry) * 0.16;
 
         const dotEl = this.dot().nativeElement;
-        const ringEl = this.ring().nativeElement;
+        const shellEl = this.shell().nativeElement;
         dotEl.style.transform = `translate3d(${this.dx}px, ${this.dy}px, 0)`;
-        ringEl.style.transform = `translate3d(${this.rx}px, ${this.ry}px, 0)`;
+        shellEl.style.transform = `translate3d(${this.rx}px, ${this.ry}px, 0)`;
         this.rafId = requestAnimationFrame(tick);
       };
       this.rafId = requestAnimationFrame(tick);

@@ -14,6 +14,8 @@ export interface ProjectCard {
   stack: readonly StackTagId[];
   /** Gradient CSS string aplicado ao cover (sem screenshot). */
   cover: string;
+  /** Indica que o projeto foi realizado via Capgemini Brasil. */
+  viaCapgemini?: boolean;
   /** Marca o projeto como destaque (cards maiores). */
   featured?: boolean;
   /** Links opcionais — corporativos quase nunca têm. */
@@ -39,6 +41,7 @@ export const PROJECTS: readonly ProjectCard[] = [
       'Liderança técnica em Angular 19 e microfrontends. Coordenação de 7 repositórios e múltiplos squads, com foco em padronização, performance e entrega contínua em ambiente regulado.',
     stack: ['angular', 'typescript', 'mfe'],
     cover: 'linear-gradient(135deg, #cc092f 0%, #2b1d1f 60%, #08080b 100%)',
+    viaCapgemini: true,
     featured: true,
   },
   {
@@ -49,7 +52,8 @@ export const PROJECTS: readonly ProjectCard[] = [
     description:
       'Aplicativo Flutter de missão crítica, com operação offline e online, sincronização confiável e atuação sob pressão operacional real.',
     stack: ['flutter'],
-    cover: 'linear-gradient(135deg, #ef4444 0%, #1a0f0d 55%, #08080b 100%)',
+    cover: 'linear-gradient(135deg, #cc092f 0%, #2b1d1f 60%, #08080b 100%)',
+    viaCapgemini: true,
     featured: true,
   },
   {
@@ -60,7 +64,8 @@ export const PROJECTS: readonly ProjectCard[] = [
     description:
       'Único desenvolvedor React Native dos apps corporativos VWeu e FsConecta — integrações, releases e evolução ponta a ponta.',
     stack: ['react', 'typescript'],
-    cover: 'linear-gradient(135deg, #001e50 0%, #0a1733 55%, #08080b 100%)',
+    cover: 'linear-gradient(135deg, #ffffff 0%, #f4f8fc 44%, #e8f0fa 100%)',
+    viaCapgemini: true,
     featured: true,
   },
   {
@@ -71,7 +76,8 @@ export const PROJECTS: readonly ProjectCard[] = [
     description:
       'Soluções Ionic com foco em experiência e prazo. Entrega que superou expectativas do cliente e dos stakeholders.',
     stack: ['ionic', 'angular'],
-    cover: 'linear-gradient(135deg, #cc092f 0%, #1a1320 60%, #08080b 100%)',
+    cover: 'linear-gradient(135deg, #cc092f 0%, #2b1d1f 60%, #08080b 100%)',
+    viaCapgemini: true,
   },
   {
     id: 'bitz-open-finance',
@@ -81,7 +87,8 @@ export const PROJECTS: readonly ProjectCard[] = [
     description:
       'Iniciativas de Open Finance com integração ao Banco Central, alto rigor de compliance técnico e fluxos sensíveis.',
     stack: ['angular', 'typescript'],
-    cover: 'linear-gradient(135deg, #1ed760 0%, #0a2218 55%, #08080b 100%)',
+    cover: 'linear-gradient(135deg, #cc092f 0%, #2b1d1f 60%, #08080b 100%)',
+    viaCapgemini: true,
   },
   {
     id: 'pulsati-rede-dor',
@@ -91,7 +98,7 @@ export const PROJECTS: readonly ProjectCard[] = [
     description:
       'Flutter em produto de telechamada e atendimento para a Rede D\'Or, com fluxos sensíveis e foco em performance.',
     stack: ['flutter'],
-    cover: 'linear-gradient(135deg, #5b21b6 0%, #1a1130 55%, #08080b 100%)',
+    cover: 'linear-gradient(135deg, #ffffff 0%, #f4f8fc 44%, #e8f0fa 100%)',
   },
   {
     id: 'nexello-apps',
@@ -101,7 +108,7 @@ export const PROJECTS: readonly ProjectCard[] = [
     description:
       'Dois aplicativos Flutter construídos do zero e publicados na Play Store e App Store, da arquitetura à publicação.',
     stack: ['flutter'],
-    cover: 'linear-gradient(135deg, #f59e0b 0%, #2b1c0d 60%, #08080b 100%)',
+    cover: 'linear-gradient(135deg, #f3e8ff 0%, #ffffff 24%, #ffffff 76%, #ede9fe 100%)',
   },
 ] as const;
 

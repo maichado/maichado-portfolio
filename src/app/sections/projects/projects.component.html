@@ -11,6 +11,20 @@
       <p class="projects__lead" appReveal [delay]="160">
         Bradesco, Volkswagen, Bombeiros SP — operações em que erro custa caro e prazo é contrato.
       </p>
+      <div class="projects__institution" appReveal [delay]="220" aria-label="Contexto institucional">
+        <img
+          class="projects__institution-logo"
+          src="/capgeminijob.png"
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          decoding="async"
+        />
+        <p class="projects__institution-text">
+          A maioria desses projetos foi realizada via <strong>Capgemini Brasil</strong> — consultoria global com
+          <strong>340.000+</strong> profissionais, presente em <strong>50+</strong> países.
+        </p>
+      </div>
     </header>
 
     <div #grid class="projects__grid" role="list">
@@ -18,6 +32,12 @@
         <article
           class="project-card"
           [class.project-card--featured]="p.featured"
+          [class.project-card--bombeiros]="p.id === 'bombeiros-sp'"
+          [class.project-card--volkswagen]="p.id === 'volkswagen'"
+          [class.project-card--bradesco-seguros]="p.id === 'bradesco-seguros'"
+          [class.project-card--bitz-open-finance]="p.id === 'bitz-open-finance'"
+          [class.project-card--rede-dor]="p.id === 'pulsati-rede-dor'"
+          [class.project-card--nexello]="p.id === 'nexello-apps'"
           appTilt
           [tiltMax]="6"
           [tiltScale]="1.015"
@@ -56,6 +76,279 @@
                   </div>
                 </div>
               </div>
+            } @else if (p.id === 'bombeiros-sp') {
+              <div class="bombeiros-art">
+                <div class="bombeiros-art__orb bombeiros-art__orb--1"></div>
+                <div class="bombeiros-art__orb bombeiros-art__orb--2"></div>
+                <div class="bombeiros-art__container">
+                  <!-- Mesmo princípio do Bradesco: várias camadas em Z + flutuação 3D -->
+                  <div class="bombeiros-3d-logo">
+                    <img
+                      class="bombeiros-3d-layer"
+                      src="/bombeiros-sp-emblem.png"
+                      alt=""
+                      aria-hidden="true"
+                      width="512"
+                      height="512"
+                      loading="lazy"
+                      decoding="async"
+                      style="--z: -18px; --op: 0.09; --br: 0.42"
+                    />
+                    <img
+                      class="bombeiros-3d-layer"
+                      src="/bombeiros-sp-emblem.png"
+                      alt=""
+                      aria-hidden="true"
+                      width="512"
+                      height="512"
+                      loading="lazy"
+                      decoding="async"
+                      style="--z: -14px; --op: 0.12; --br: 0.48"
+                    />
+                    <img
+                      class="bombeiros-3d-layer"
+                      src="/bombeiros-sp-emblem.png"
+                      alt=""
+                      aria-hidden="true"
+                      width="512"
+                      height="512"
+                      loading="lazy"
+                      decoding="async"
+                      style="--z: -10px; --op: 0.16; --br: 0.54"
+                    />
+                    <img
+                      class="bombeiros-3d-layer"
+                      src="/bombeiros-sp-emblem.png"
+                      alt=""
+                      aria-hidden="true"
+                      width="512"
+                      height="512"
+                      loading="lazy"
+                      decoding="async"
+                      style="--z: -6px; --op: 0.22; --br: 0.62"
+                    />
+                    <img
+                      class="bombeiros-3d-layer"
+                      src="/bombeiros-sp-emblem.png"
+                      alt=""
+                      aria-hidden="true"
+                      width="512"
+                      height="512"
+                      loading="lazy"
+                      decoding="async"
+                      style="--z: -2px; --op: 0.32; --br: 0.72"
+                    />
+                    <img
+                      class="bombeiros-3d-layer"
+                      src="/bombeiros-sp-emblem.png"
+                      alt=""
+                      aria-hidden="true"
+                      width="512"
+                      height="512"
+                      loading="lazy"
+                      decoding="async"
+                      style="--z: 3px; --op: 0.48; --br: 0.85"
+                    />
+                    <img
+                      class="bombeiros-3d-layer bombeiros-3d-layer--front"
+                      src="/bombeiros-sp-emblem.png"
+                      alt=""
+                      aria-hidden="true"
+                      width="512"
+                      height="512"
+                      loading="lazy"
+                      decoding="async"
+                      style="--z: 8px; --op: 1; --br: 1"
+                    />
+                  </div>
+                </div>
+              </div>
+            } @else if (p.id === 'volkswagen') {
+              <div class="vw-art">
+                <div class="vw-art__orb vw-art__orb--1"></div>
+                <div class="vw-art__orb vw-art__orb--2"></div>
+                <div class="vw-art__container">
+                  <div class="vw-3d-logo">
+                    <img
+                      class="vw-3d-layer"
+                      src="/VWLogo.png"
+                      alt=""
+                      aria-hidden="true"
+                      width="800"
+                      height="400"
+                      loading="lazy"
+                      decoding="async"
+                      style="--z: -18px; --op: 0.09; --br: 0.42"
+                    />
+                    <img
+                      class="vw-3d-layer"
+                      src="/VWLogo.png"
+                      alt=""
+                      aria-hidden="true"
+                      width="800"
+                      height="400"
+                      loading="lazy"
+                      decoding="async"
+                      style="--z: -14px; --op: 0.12; --br: 0.48"
+                    />
+                    <img
+                      class="vw-3d-layer"
+                      src="/VWLogo.png"
+                      alt=""
+                      aria-hidden="true"
+                      width="800"
+                      height="400"
+                      loading="lazy"
+                      decoding="async"
+                      style="--z: -10px; --op: 0.16; --br: 0.54"
+                    />
+                    <img
+                      class="vw-3d-layer"
+                      src="/VWLogo.png"
+                      alt=""
+                      aria-hidden="true"
+                      width="800"
+                      height="400"
+                      loading="lazy"
+                      decoding="async"
+                      style="--z: -6px; --op: 0.22; --br: 0.62"
+                    />
+                    <img
+                      class="vw-3d-layer"
+                      src="/VWLogo.png"
+                      alt=""
+                      aria-hidden="true"
+                      width="800"
+                      height="400"
+                      loading="lazy"
+                      decoding="async"
+                      style="--z: -2px; --op: 0.32; --br: 0.72"
+                    />
+                    <img
+                      class="vw-3d-layer"
+                      src="/VWLogo.png"
+                      alt=""
+                      aria-hidden="true"
+                      width="800"
+                      height="400"
+                      loading="lazy"
+                      decoding="async"
+                      style="--z: 3px; --op: 0.48; --br: 0.85"
+                    />
+                    <img
+                      class="vw-3d-layer vw-3d-layer--front"
+                      src="/VWLogo.png"
+                      alt=""
+                      aria-hidden="true"
+                      width="800"
+                      height="400"
+                      loading="lazy"
+                      decoding="async"
+                      style="--z: 8px; --op: 1; --br: 1"
+                    />
+                  </div>
+                </div>
+              </div>
+            } @else if (p.id === 'bradesco-seguros') {
+              <div class="seguros-art">
+                <div class="seguros-art__orb seguros-art__orb--1"></div>
+                <div class="seguros-art__orb seguros-art__orb--2"></div>
+                <div class="seguros-art__container">
+                  <div class="seguros-3d-logo">
+                    @for (layer of segurosLogoLayers; track $index) {
+                      <img
+                        class="seguros-3d-layer"
+                        [class.seguros-3d-layer--front]="layer.front"
+                        src="/bradesco-seguros-logo.png"
+                        alt=""
+                        aria-hidden="true"
+                        width="512"
+                        height="512"
+                        loading="lazy"
+                        decoding="async"
+                        [style.--z]="layer.z"
+                        [style.--op]="layer.op"
+                        [style.--br]="layer.br"
+                      />
+                    }
+                  </div>
+                </div>
+              </div>
+            } @else if (p.id === 'bitz-open-finance') {
+              <div class="bitz-art">
+                <div class="bitz-art__orb bitz-art__orb--1"></div>
+                <div class="bitz-art__orb bitz-art__orb--2"></div>
+                <div class="bitz-art__container">
+                  <div class="bitz-3d-logo">
+                    @for (layer of bitzLogoLayers; track $index) {
+                      <img
+                        class="bitz-3d-layer"
+                        [class.bitz-3d-layer--front]="layer.front"
+                        src="/bitz-open-finance-logo.png"
+                        alt=""
+                        aria-hidden="true"
+                        width="800"
+                        height="400"
+                        loading="lazy"
+                        decoding="async"
+                        [style.--z]="layer.z"
+                        [style.--op]="layer.op"
+                        [style.--br]="layer.br"
+                      />
+                    }
+                  </div>
+                </div>
+              </div>
+            } @else if (p.id === 'pulsati-rede-dor') {
+              <div class="rede-art">
+                <div class="rede-art__orb rede-art__orb--1"></div>
+                <div class="rede-art__orb rede-art__orb--2"></div>
+                <div class="rede-art__container">
+                  <div class="rede-3d-logo">
+                    @for (layer of redeDorLogoLayers; track $index) {
+                      <img
+                        class="rede-3d-layer"
+                        [class.rede-3d-layer--front]="layer.front"
+                        src="/rede-dor-logo.png"
+                        alt=""
+                        aria-hidden="true"
+                        width="800"
+                        height="400"
+                        loading="lazy"
+                        decoding="async"
+                        [style.--z]="layer.z"
+                        [style.--op]="layer.op"
+                        [style.--br]="layer.br"
+                      />
+                    }
+                  </div>
+                </div>
+              </div>
+            } @else if (p.id === 'nexello-apps') {
+              <div class="nexello-art">
+                <div class="nexello-art__orb nexello-art__orb--1"></div>
+                <div class="nexello-art__orb nexello-art__orb--2"></div>
+                <div class="nexello-art__container">
+                  <div class="nexello-3d-logo">
+                    @for (layer of nexelloLogoLayers; track $index) {
+                      <img
+                        class="nexello-3d-layer"
+                        [class.nexello-3d-layer--front]="layer.front"
+                        src="/Nexello.png"
+                        alt=""
+                        aria-hidden="true"
+                        width="800"
+                        height="400"
+                        loading="lazy"
+                        decoding="async"
+                        [style.--z]="layer.z"
+                        [style.--op]="layer.op"
+                        [style.--br]="layer.br"
+                      />
+                    }
+                  </div>
+                </div>
+              </div>
             } @else {
               <span class="project-card__cover-title">{{ p.title }}</span>
             }
@@ -67,8 +360,19 @@
               <span class="project-card__period">{{ p.period }}</span>
               <span class="project-card__divider" aria-hidden="true"></span>
               <span class="project-card__client">{{ p.client }}</span>
+              @if (p.viaCapgemini) {
+                <span class="project-card__badge" aria-label="Via Capgemini">
+                  <span class="project-card__badge-dot" aria-hidden="true"></span>
+                  Via Capgemini
+                </span>
+              }
             </div>
             <h3 class="project-card__title">{{ p.title }}</h3>
+            @if (p.id === 'bradesco-icef') {
+              <p class="project-card__context">
+                Alocado via Capgemini Brasil para arquitetura de plataforma enterprise.
+              </p>
+            }
 
             <div class="project-card__overlay">
               <p class="project-card__desc">{{ p.description }}</p>

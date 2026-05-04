@@ -52,6 +52,50 @@
   max-width: 50ch;
 }
 
+.projects__institution {
+  margin-top: var(--space-6);
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: color-mix(in srgb, var(--color-surface) 70%, transparent);
+  backdrop-filter: blur(10px);
+}
+
+.projects__institution-logo {
+  width: 92px;
+  height: auto;
+  opacity: 0.42;
+  filter: saturate(1.15) contrast(1.05) drop-shadow(0 10px 26px rgba(0, 0, 0, 0.45));
+  flex: 0 0 auto;
+  user-select: none;
+  pointer-events: none;
+}
+
+.projects__institution-text {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.4;
+  color: color-mix(in srgb, var(--color-text-muted) 90%, white);
+}
+
+.projects__institution-text strong {
+  font-weight: 600;
+  color: color-mix(in srgb, var(--color-text-primary) 88%, var(--color-accent));
+}
+
+@media (max-width: 420px) {
+  .projects__institution-logo {
+    width: 76px;
+  }
+}
+
 .projects__grid {
   display: grid;
   gap: var(--space-6);
@@ -91,7 +135,7 @@
 
 .project-card__cover {
   position: relative;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 16 / 13;
   display: grid;
   place-items: center;
   overflow: hidden;
@@ -99,6 +143,31 @@
 
 .project-card--featured .project-card__cover {
   aspect-ratio: 16 / 8;
+}
+
+/* Cover mais alto no Bombeiros (coluna única — aproxima proporção visual do Bradesco em destaque) */
+.project-card--bombeiros .project-card__cover {
+  aspect-ratio: 16 / 12;
+}
+
+@media (min-width: 720px) {
+  .project-card--bombeiros .project-card__cover {
+    aspect-ratio: 14 / 12;
+  }
+}
+
+.project-card--volkswagen .project-card__cover,
+.project-card--rede-dor .project-card__cover,
+.project-card--nexello .project-card__cover {
+  aspect-ratio: 16 / 12;
+}
+
+@media (min-width: 720px) {
+  .project-card--volkswagen .project-card__cover,
+  .project-card--rede-dor .project-card__cover,
+  .project-card--nexello .project-card__cover {
+    aspect-ratio: 16 / 13;
+  }
 }
 
 .project-card__cover-title {
@@ -136,6 +205,20 @@
   pointer-events: none;
 }
 
+/* Cover claro (VW + Rede D'Or + Nexello): vinheta suave para o corpo escuro do card */
+.project-card--volkswagen .project-card__cover::after,
+.project-card--rede-dor .project-card__cover::after,
+.project-card--nexello .project-card__cover::after {
+  background: linear-gradient(180deg, transparent 55%, rgba(15, 23, 42, 0.08) 82%, rgba(15, 23, 42, 0.14) 100%);
+}
+
+.project-card--volkswagen .project-card__cover-noise,
+.project-card--rede-dor .project-card__cover-noise,
+.project-card--nexello .project-card__cover-noise {
+  opacity: 0.45;
+  mix-blend-mode: multiply;
+}
+
 .project-card__body {
   position: relative;
   padding: var(--space-6) var(--space-6) var(--space-6);
@@ -154,6 +237,26 @@
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--color-text-muted);
+  flex-wrap: wrap;
+}
+
+.project-card__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-full);
+  border: 1px solid color-mix(in srgb, var(--color-accent) 28%, var(--color-border-strong));
+  background: color-mix(in srgb, var(--color-accent) 10%, transparent);
+  color: color-mix(in srgb, var(--color-text-primary) 82%, var(--color-accent));
+}
+
+.project-card__badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: color-mix(in srgb, var(--color-accent) 78%, white);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent) 18%, transparent);
 }
 
 .project-card__divider {
@@ -167,6 +270,13 @@
   margin: 0;
   font-size: clamp(1.2rem, 2vw, 1.55rem);
   line-height: 1.2;
+}
+
+.project-card__context {
+  margin: 0;
+  color: color-mix(in srgb, var(--color-text-muted) 92%, white);
+  font-size: 0.9rem;
+  line-height: 1.45;
 }
 
 .project-card__overlay {
@@ -306,7 +416,7 @@
 
 .bradesco-3d-logo {
   position: relative;
-  width: clamp(180px, 60%, 340px);
+  width: clamp(250px, 80%, 500px);
   aspect-ratio: 123 / 23.1;
   transform-style: preserve-3d;
   animation: bradesco-3d-float 12s ease-in-out infinite alternate;
@@ -338,11 +448,406 @@
   }
 }
 
+/* Arte especial Bombeiros SP (emblema — orbs + peça central com profundidade) */
+.bombeiros-art {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.bombeiros-art__orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(40px);
+  mix-blend-mode: screen;
+  animation: bombeiros-drift 14s infinite alternate ease-in-out;
+}
+
+.bombeiros-art__orb--1 {
+  width: 240px;
+  height: 240px;
+  top: -18%;
+  left: -10%;
+  background: #ef4444;
+  opacity: 0.48;
+}
+
+.bombeiros-art__orb--2 {
+  width: 200px;
+  height: 200px;
+  bottom: -14%;
+  right: -10%;
+  background: #fecaca;
+  opacity: 0.32;
+  animation-duration: 18s;
+  animation-direction: alternate-reverse;
+}
+
+@keyframes bombeiros-drift {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(-26px, 18px) scale(1.08); }
+}
+
+.bombeiros-art__container {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 70%;
+  height: 70%;
+  perspective: 1800px;
+}
+
+@media (min-width: 720px) {
+  .bombeiros-art__container {
+    width: 80%;
+    height: 80%;
+  }
+}
+
+/* Extrusão 3D do emblema (mesma lógica do Bradesco: camadas em translateZ + face frontal) */
+.bombeiros-3d-logo {
+  position: relative;
+  width: clamp(190px, 58vw, 360px);
+  max-width: min(78%, 360px);
+  aspect-ratio: 1;
+  transform-style: preserve-3d;
+  animation: bombeiros-3d-float 12s ease-in-out infinite alternate;
+}
+
+.bombeiros-3d-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 50%;
+  transform: translateZ(var(--z, 0));
+  opacity: var(--op, 1);
+  filter: brightness(var(--br, 1));
+  pointer-events: none;
+  backface-visibility: hidden;
+}
+
+.bombeiros-3d-layer--front {
+  filter:
+    brightness(1)
+    drop-shadow(0 4px 14px rgba(0, 0, 0, 0.75))
+    drop-shadow(0 14px 36px rgba(0, 0, 0, 0.45))
+    drop-shadow(0 0 32px rgba(239, 68, 68, 0.45));
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.14);
+}
+
+@keyframes bombeiros-3d-float {
+  0% {
+    transform: rotateX(18deg) rotateY(-22deg) rotateZ(0deg) translateY(0);
+  }
+  100% {
+    transform: rotateX(-10deg) rotateY(22deg) rotateZ(-2deg) translateY(-10px);
+  }
+}
+
+/* Arte cover claro: Volkswagen, Rede D'Or, Nexello; + Bradesco Seguros / BITZ (fundo escuro) */
+.vw-art,
+.rede-art,
+.nexello-art,
+.seguros-art,
+.bitz-art {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.vw-art__orb,
+.rede-art__orb,
+.nexello-art__orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(48px);
+  mix-blend-mode: normal;
+  animation: vw-drift 15s infinite alternate ease-in-out;
+}
+
+/* Orbs no mesmo clima do ICEF (fundo vermelho escuro Bradesco) */
+.seguros-art__orb,
+.bitz-art__orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(40px);
+  mix-blend-mode: screen;
+  animation: bradesco-drift 12s infinite alternate ease-in-out;
+}
+
+.vw-art__orb--1,
+.rede-art__orb--1 {
+  width: 280px;
+  height: 280px;
+  top: -22%;
+  right: -10%;
+  background: #001e50;
+  opacity: 0.16;
+}
+
+.vw-art__orb--2,
+.rede-art__orb--2 {
+  width: 260px;
+  height: 260px;
+  bottom: -18%;
+  left: -14%;
+  background: #60a5fa;
+  opacity: 0.22;
+  animation-duration: 19s;
+  animation-direction: alternate-reverse;
+}
+
+.nexello-art__orb--1 {
+  width: 280px;
+  height: 280px;
+  top: -22%;
+  right: -10%;
+  background: #8b5cf6;
+  opacity: 0.14;
+}
+
+.nexello-art__orb--2 {
+  width: 260px;
+  height: 260px;
+  bottom: -18%;
+  left: -14%;
+  background: #c4b5fd;
+  opacity: 0.18;
+  animation-duration: 19s;
+  animation-direction: alternate-reverse;
+}
+
+.seguros-art__orb--1 {
+  width: 250px;
+  height: 250px;
+  top: -20%;
+  left: -10%;
+  background: #cc092f;
+  opacity: 0.5;
+}
+
+.seguros-art__orb--2 {
+  width: 180px;
+  height: 180px;
+  bottom: -10%;
+  right: -10%;
+  background: #ff4d4d;
+  opacity: 0.3;
+  animation-duration: 15s;
+  animation-direction: alternate-reverse;
+}
+
+.bitz-art__orb--1 {
+  width: 250px;
+  height: 250px;
+  top: -20%;
+  right: -8%;
+  background: #cc092f;
+  opacity: 0.48;
+}
+
+.bitz-art__orb--2 {
+  width: 180px;
+  height: 180px;
+  bottom: -10%;
+  left: -10%;
+  background: #ff4d4d;
+  opacity: 0.28;
+  animation-duration: 15s;
+  animation-direction: alternate-reverse;
+}
+
+@keyframes vw-drift {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(22px, -14px) scale(1.07); }
+}
+
+.vw-art__container,
+.rede-art__container,
+.nexello-art__container,
+.seguros-art__container,
+.bitz-art__container {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  perspective: 3000px;
+}
+
+@media (min-width: 720px) {
+  .vw-art__container,
+  .rede-art__container,
+  .nexello-art__container,
+  .seguros-art__container,
+  .bitz-art__container {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.vw-3d-logo {
+  position: relative;
+  flex: 0 0 auto;
+  width: min(120%, 760px);
+  min-width: 0;
+  max-width: 760px;
+  aspect-ratio: 2.2 / 1;
+  transform-style: preserve-3d;
+  animation: vw-3d-float 12s ease-in-out infinite alternate;
+}
+
+/* Rede D'Or: marca horizontal — menor que o bloco VW */
+.rede-3d-logo {
+  position: relative;
+  flex: 0 0 auto;
+  width: min(92%, 440px);
+  min-width: 0;
+  max-width: 440px;
+  aspect-ratio: 2.2 / 1;
+  transform-style: preserve-3d;
+  animation: vw-3d-float 12s ease-in-out infinite alternate;
+}
+
+/* Nexello: marca horizontal, mesmo porte da Rede D'Or */
+.nexello-3d-logo {
+  position: relative;
+  flex: 0 0 auto;
+  width: min(92%, 440px);
+  min-width: 0;
+  max-width: 440px;
+  aspect-ratio: 2.2 / 1;
+  transform-style: preserve-3d;
+  animation: vw-3d-float 12s ease-in-out infinite alternate;
+}
+
+.bitz-3d-logo {
+  position: relative;
+  flex: 0 0 auto;
+  width: min(88%, 320px);
+  min-width: 0;
+  max-width: 320px;
+  aspect-ratio: 2.2 / 1;
+  transform-style: preserve-3d;
+  animation: vw-3d-float 12s ease-in-out infinite alternate;
+}
+
+.seguros-3d-logo {
+  position: relative;
+  flex: 0 0 auto;
+  width: min(82%, 220px);
+  min-width: 0;
+  max-width: 220px;
+  aspect-ratio: 1;
+  transform-style: preserve-3d;
+  animation: vw-3d-float 12s ease-in-out infinite alternate;
+}
+
+.vw-3d-layer,
+.rede-3d-layer,
+.nexello-3d-layer,
+.seguros-3d-layer,
+.bitz-3d-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform: translateZ(var(--z, 0));
+  opacity: var(--op, 1);
+  filter: brightness(var(--br, 1));
+  pointer-events: none;
+  backface-visibility: hidden;
+}
+
+.vw-3d-layer--front,
+.rede-3d-layer--front {
+  filter:
+    brightness(1)
+    drop-shadow(0 2px 10px rgba(15, 23, 42, 0.12))
+    drop-shadow(0 10px 28px rgba(0, 30, 80, 0.14))
+    drop-shadow(0 0 44px rgba(59, 130, 246, 0.22));
+}
+
+.nexello-3d-layer--front {
+  filter:
+    brightness(1)
+    drop-shadow(0 2px 10px rgba(15, 23, 42, 0.1))
+    drop-shadow(0 10px 28px rgba(91, 33, 182, 0.18))
+    drop-shadow(0 0 44px rgba(139, 92, 246, 0.28));
+}
+
+.seguros-3d-layer--front {
+  filter:
+    brightness(1)
+    drop-shadow(0 4px 18px rgba(0, 0, 0, 0.55))
+    drop-shadow(0 0 26px rgba(255, 255, 255, 0.16));
+}
+
+.bitz-3d-layer--front {
+  filter:
+    brightness(1)
+    drop-shadow(0 4px 18px rgba(0, 0, 0, 0.55))
+    drop-shadow(0 0 24px rgba(255, 255, 255, 0.14));
+}
+
+@keyframes vw-3d-float {
+  0% {
+    transform: rotateX(16deg) rotateY(-20deg) rotateZ(0deg) translateY(0);
+  }
+  100% {
+    transform: rotateX(-9deg) rotateY(20deg) rotateZ(1.5deg) translateY(-10px);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .bradesco-art__orb, .bradesco-3d-logo {
     animation: none;
   }
   .bradesco-3d-logo {
     transform: rotateX(15deg) rotateY(-15deg);
+  }
+
+  .bombeiros-art__orb,
+  .bombeiros-3d-logo {
+    animation: none;
+  }
+
+  .bombeiros-3d-logo {
+    transform: rotateX(14deg) rotateY(-16deg);
+  }
+
+  .vw-art__orb,
+  .rede-art__orb,
+  .nexello-art__orb,
+  .seguros-art__orb,
+  .bitz-art__orb,
+  .vw-3d-logo,
+  .rede-3d-logo,
+  .nexello-3d-logo,
+  .seguros-3d-logo,
+  .bitz-3d-logo {
+    animation: none;
+  }
+
+  .vw-3d-logo,
+  .rede-3d-logo,
+  .nexello-3d-logo,
+  .bitz-3d-logo {
+    transform: rotateX(12deg) rotateY(-14deg);
+  }
+
+  .seguros-3d-logo {
+    transform: rotateX(12deg) rotateY(-14deg);
   }
 }

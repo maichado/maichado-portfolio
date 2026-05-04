@@ -70,9 +70,11 @@
   --content-max: 78rem;
   --section-pad-y: clamp(5rem, 12vw, 9rem);
 
-  // Cursor (custom)
-  --cursor-size: 8px;
-  --cursor-ring: 38px;
+  // Cursor (custom — moldura cantoneiras + pivô; nomes alinhados a cursor.component.scss)
+  --cursor-frame: 21px;
+  --cursor-bracket: 6px;
+  --cursor-bracket-hover: 8px;
+  --cursor-pivot: 2px;
 
   // Reactive grid (atualizado por mousemove no hero)
   --hero-mx: 50%;
