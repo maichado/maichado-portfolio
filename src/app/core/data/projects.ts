@@ -101,6 +101,16 @@ export const PROJECTS: readonly ProjectCard[] = [
     cover: 'linear-gradient(135deg, #ffffff 0%, #f4f8fc 44%, #e8f0fa 100%)',
   },
   {
+    id: 'sales-sense-app',
+    title: 'App · Consulta de estoque',
+    client: 'Sales Sense',
+    period: '2020 — 2023',
+    description:
+      'Projeto PJ de longa duração para a Sales Sense, plataforma de vendas. Entreguei o aplicativo completo em Flutter, com todas as funcionalidades em produção. Posteriormente, conduzi a migração estratégica para React Native, implementando uma solução de inovação que modernizou toda a arquitetura mobile do produto.',
+    stack: ['flutter', 'react'],
+    cover: 'linear-gradient(135deg, #ffffff 0%, #f4f8fc 44%, #e8f0fa 100%)',
+  },
+  {
     id: 'nexello-apps',
     title: 'Dois Apps · Lojas Publicadas',
     client: 'Nexello',

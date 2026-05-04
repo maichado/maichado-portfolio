@@ -158,6 +158,7 @@
 
 .project-card--volkswagen .project-card__cover,
 .project-card--rede-dor .project-card__cover,
+.project-card--sales-sense .project-card__cover,
 .project-card--nexello .project-card__cover {
   aspect-ratio: 16 / 12;
 }
@@ -165,6 +166,7 @@
 @media (min-width: 720px) {
   .project-card--volkswagen .project-card__cover,
   .project-card--rede-dor .project-card__cover,
+  .project-card--sales-sense .project-card__cover,
   .project-card--nexello .project-card__cover {
     aspect-ratio: 16 / 13;
   }
@@ -173,7 +175,7 @@
 .project-card__cover-title {
   position: relative;
   z-index: 1;
-  font-family: var(--font-display);
+  font-family: 'Plus Jakarta Sans', sans-serif;
   font-weight: 700;
   font-size: clamp(1.6rem, 3vw, 2.4rem);
   letter-spacing: -0.03em;
@@ -205,15 +207,17 @@
   pointer-events: none;
 }
 
-/* Cover claro (VW + Rede D'Or + Nexello): vinheta suave para o corpo escuro do card */
+/* Cover claro (VW + Rede D'Or + Sales Sense + Nexello): vinheta suave para o corpo escuro do card */
 .project-card--volkswagen .project-card__cover::after,
 .project-card--rede-dor .project-card__cover::after,
+.project-card--sales-sense .project-card__cover::after,
 .project-card--nexello .project-card__cover::after {
   background: linear-gradient(180deg, transparent 55%, rgba(15, 23, 42, 0.08) 82%, rgba(15, 23, 42, 0.14) 100%);
 }
 
 .project-card--volkswagen .project-card__cover-noise,
 .project-card--rede-dor .project-card__cover-noise,
+.project-card--sales-sense .project-card__cover-noise,
 .project-card--nexello .project-card__cover-noise {
   opacity: 0.45;
   mix-blend-mode: multiply;
@@ -268,6 +272,7 @@
 
 .project-card__title {
   margin: 0;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: clamp(1.2rem, 2vw, 1.55rem);
   line-height: 1.2;
 }
@@ -410,42 +415,6 @@
   justify-content: center;
   width: 100%;
   height: 100%;
-  /* Perspective added for 3D inside container */
-  perspective: 1800px;
-}
-
-.bradesco-3d-logo {
-  position: relative;
-  width: clamp(250px, 80%, 500px);
-  aspect-ratio: 123 / 23.1;
-  transform-style: preserve-3d;
-  animation: bradesco-3d-float 12s ease-in-out infinite alternate;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.bradesco-3d-layer {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  fill: #8a001a; /* Darker red for 3D depth/extrusion */
-  transform: translateZ(var(--z));
-  filter: drop-shadow(0 0 1px rgba(0,0,0,0.8));
-}
-
-.bradesco-3d-layer--front {
-  fill: #E5173F; /* Bradesco original bright red */
-  filter: drop-shadow(0 4px 16px rgba(229, 23, 63, 0.5));
-}
-
-@keyframes bradesco-3d-float {
-  0% {
-    transform: rotateX(20deg) rotateY(-25deg) rotateZ(0deg) translateY(0);
-  }
-  100% {
-    transform: rotateX(-10deg) rotateY(25deg) rotateZ(3deg) translateY(-10px);
-  }
 }
 
 /* Arte especial Bombeiros SP (emblema — orbs + peça central com profundidade) */
@@ -498,7 +467,6 @@
   justify-content: center;
   width: 70%;
   height: 70%;
-  perspective: 1800px;
 }
 
 @media (min-width: 720px) {
@@ -508,51 +476,10 @@
   }
 }
 
-/* Extrusão 3D do emblema (mesma lógica do Bradesco: camadas em translateZ + face frontal) */
-.bombeiros-3d-logo {
-  position: relative;
-  width: clamp(190px, 58vw, 360px);
-  max-width: min(78%, 360px);
-  aspect-ratio: 1;
-  transform-style: preserve-3d;
-  animation: bombeiros-3d-float 12s ease-in-out infinite alternate;
-}
-
-.bombeiros-3d-layer {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  border-radius: 50%;
-  transform: translateZ(var(--z, 0));
-  opacity: var(--op, 1);
-  filter: brightness(var(--br, 1));
-  pointer-events: none;
-  backface-visibility: hidden;
-}
-
-.bombeiros-3d-layer--front {
-  filter:
-    brightness(1)
-    drop-shadow(0 4px 14px rgba(0, 0, 0, 0.75))
-    drop-shadow(0 14px 36px rgba(0, 0, 0, 0.45))
-    drop-shadow(0 0 32px rgba(239, 68, 68, 0.45));
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.14);
-}
-
-@keyframes bombeiros-3d-float {
-  0% {
-    transform: rotateX(18deg) rotateY(-22deg) rotateZ(0deg) translateY(0);
-  }
-  100% {
-    transform: rotateX(-10deg) rotateY(22deg) rotateZ(-2deg) translateY(-10px);
-  }
-}
-
-/* Arte cover claro: Volkswagen, Rede D'Or, Nexello; + Bradesco Seguros / BITZ (fundo escuro) */
+/* Arte cover claro: Volkswagen, Rede D'Or, Sales Sense, Nexello; + Bradesco Seguros / BITZ (fundo escuro) */
 .vw-art,
 .rede-art,
+.sales-sense-art,
 .nexello-art,
 .seguros-art,
 .bitz-art {
@@ -565,6 +492,7 @@
 
 .vw-art__orb,
 .rede-art__orb,
+.sales-sense-art__orb,
 .nexello-art__orb {
   position: absolute;
   border-radius: 50%;
@@ -625,6 +553,26 @@
   animation-direction: alternate-reverse;
 }
 
+.sales-sense-art__orb--1 {
+  width: 280px;
+  height: 280px;
+  top: -22%;
+  right: -10%;
+  background: #001e50;
+  opacity: 0.16;
+}
+
+.sales-sense-art__orb--2 {
+  width: 260px;
+  height: 260px;
+  bottom: -18%;
+  left: -14%;
+  background: #60a5fa;
+  opacity: 0.22;
+  animation-duration: 19s;
+  animation-direction: alternate-reverse;
+}
+
 .seguros-art__orb--1 {
   width: 250px;
   height: 250px;
@@ -672,6 +620,7 @@
 
 .vw-art__container,
 .rede-art__container,
+.sales-sense-art__container,
 .nexello-art__container,
 .seguros-art__container,
 .bitz-art__container {
@@ -682,12 +631,12 @@
   justify-content: center;
   width: 100%;
   height: 100%;
-  perspective: 3000px;
 }
 
 @media (min-width: 720px) {
   .vw-art__container,
   .rede-art__container,
+  .sales-sense-art__container,
   .nexello-art__container,
   .seguros-art__container,
   .bitz-art__container {
@@ -696,158 +645,54 @@
   }
 }
 
-.vw-3d-logo {
+/* Marca plana no cover (sem pilha 3D nem animação de rotação) */
+.project-card__cover-mark {
   position: relative;
-  flex: 0 0 auto;
-  width: min(120%, 760px);
-  min-width: 0;
-  max-width: 760px;
-  aspect-ratio: 2.2 / 1;
-  transform-style: preserve-3d;
-  animation: vw-3d-float 12s ease-in-out infinite alternate;
-}
-
-/* Rede D'Or: marca horizontal — menor que o bloco VW */
-.rede-3d-logo {
-  position: relative;
-  flex: 0 0 auto;
-  width: min(92%, 440px);
-  min-width: 0;
-  max-width: 440px;
-  aspect-ratio: 2.2 / 1;
-  transform-style: preserve-3d;
-  animation: vw-3d-float 12s ease-in-out infinite alternate;
-}
-
-/* Nexello: marca horizontal, mesmo porte da Rede D'Or */
-.nexello-3d-logo {
-  position: relative;
-  flex: 0 0 auto;
-  width: min(92%, 440px);
-  min-width: 0;
-  max-width: 440px;
-  aspect-ratio: 2.2 / 1;
-  transform-style: preserve-3d;
-  animation: vw-3d-float 12s ease-in-out infinite alternate;
-}
-
-.bitz-3d-logo {
-  position: relative;
-  flex: 0 0 auto;
-  width: min(88%, 320px);
-  min-width: 0;
-  max-width: 320px;
-  aspect-ratio: 2.2 / 1;
-  transform-style: preserve-3d;
-  animation: vw-3d-float 12s ease-in-out infinite alternate;
-}
-
-.seguros-3d-logo {
-  position: relative;
-  flex: 0 0 auto;
-  width: min(82%, 220px);
-  min-width: 0;
-  max-width: 220px;
-  aspect-ratio: 1;
-  transform-style: preserve-3d;
-  animation: vw-3d-float 12s ease-in-out infinite alternate;
-}
-
-.vw-3d-layer,
-.rede-3d-layer,
-.nexello-3d-layer,
-.seguros-3d-layer,
-.bitz-3d-layer {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  z-index: 2;
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: min(84%, 340px);
+  margin: 0 auto;
   object-fit: contain;
-  transform: translateZ(var(--z, 0));
-  opacity: var(--op, 1);
-  filter: brightness(var(--br, 1));
-  pointer-events: none;
-  backface-visibility: hidden;
+  filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.14));
 }
 
-.vw-3d-layer--front,
-.rede-3d-layer--front {
-  filter:
-    brightness(1)
-    drop-shadow(0 2px 10px rgba(15, 23, 42, 0.12))
-    drop-shadow(0 10px 28px rgba(0, 30, 80, 0.14))
-    drop-shadow(0 0 44px rgba(59, 130, 246, 0.22));
+.project-card__cover-mark--bradesco {
+  width: clamp(220px, 76%, 460px);
+  max-width: 460px;
+  height: auto;
+  filter: drop-shadow(0 3px 14px rgba(0, 0, 0, 0.22));
 }
 
-.nexello-3d-layer--front {
-  filter:
-    brightness(1)
-    drop-shadow(0 2px 10px rgba(15, 23, 42, 0.1))
-    drop-shadow(0 10px 28px rgba(91, 33, 182, 0.18))
-    drop-shadow(0 0 44px rgba(139, 92, 246, 0.28));
+.project-card--volkswagen .project-card__cover-mark {
+  max-width: min(74%, 220px);
 }
 
-.seguros-3d-layer--front {
-  filter:
-    brightness(1)
-    drop-shadow(0 4px 18px rgba(0, 0, 0, 0.55))
-    drop-shadow(0 0 26px rgba(255, 255, 255, 0.16));
+.project-card--sales-sense .project-card__cover-mark {
+  max-width: min(74%, 200px);
 }
 
-.bitz-3d-layer--front {
-  filter:
-    brightness(1)
-    drop-shadow(0 4px 18px rgba(0, 0, 0, 0.55))
-    drop-shadow(0 0 24px rgba(255, 255, 255, 0.14));
+.project-card--bradesco-seguros .project-card__cover-mark,
+.project-card--bitz-open-finance .project-card__cover-mark {
+  max-width: min(86%, 320px);
 }
 
-@keyframes vw-3d-float {
-  0% {
-    transform: rotateX(16deg) rotateY(-20deg) rotateZ(0deg) translateY(0);
-  }
-  100% {
-    transform: rotateX(-9deg) rotateY(20deg) rotateZ(1.5deg) translateY(-10px);
-  }
+.bombeiros-art .project-card__cover-mark {
+  max-width: min(72%, 300px);
+  aspect-ratio: 1;
+  border-radius: 50%;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .bradesco-art__orb, .bradesco-3d-logo {
-    animation: none;
-  }
-  .bradesco-3d-logo {
-    transform: rotateX(15deg) rotateY(-15deg);
-  }
-
   .bombeiros-art__orb,
-  .bombeiros-3d-logo {
-    animation: none;
-  }
-
-  .bombeiros-3d-logo {
-    transform: rotateX(14deg) rotateY(-16deg);
-  }
-
   .vw-art__orb,
   .rede-art__orb,
+  .sales-sense-art__orb,
   .nexello-art__orb,
   .seguros-art__orb,
   .bitz-art__orb,
-  .vw-3d-logo,
-  .rede-3d-logo,
-  .nexello-3d-logo,
-  .seguros-3d-logo,
-  .bitz-3d-logo {
+  .bradesco-art__orb {
     animation: none;
-  }
-
-  .vw-3d-logo,
-  .rede-3d-logo,
-  .nexello-3d-logo,
-  .bitz-3d-logo {
-    transform: rotateX(12deg) rotateY(-14deg);
-  }
-
-  .seguros-3d-logo {
-    transform: rotateX(12deg) rotateY(-14deg);
   }
 }
