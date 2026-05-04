@@ -7,7 +7,16 @@ interface SkillChip {
   name: string;
   years: number;
   description: string;
-  iconId: 'angular' | 'flutter' | 'react' | 'typescript' | 'ionic' | 'mfe';
+  iconId:
+    | 'angular'
+    | 'flutter'
+    | 'react'
+    | 'typescript'
+    | 'ionic'
+    | 'mfe'
+    | 'kotlin'
+    | 'githubActions'
+    | 'architecture';
 }
 
 @Component({
@@ -19,12 +28,21 @@ interface SkillChip {
 })
 export class SkillsComponent {
   protected readonly skills: readonly SkillChip[] = [
-    { name: 'Angular', years: 4, description: 'Arquitetura e times', iconId: 'angular' },
+    { name: 'Angular', years: 5, description: 'Arquitetura e times', iconId: 'angular' },
     { name: 'Flutter', years: 5, description: 'Apps críticos offline', iconId: 'flutter' },
     { name: 'React Native', years: 3, description: 'Mobile corporativo', iconId: 'react' },
+    { name: 'React', years: 3, description: 'UI web e ecossistema', iconId: 'react' },
     { name: 'TypeScript', years: 4, description: 'Contratos sólidos', iconId: 'typescript' },
     { name: 'Ionic', years: 3, description: 'Híbrido com sabor nativo', iconId: 'ionic' },
-    { name: 'Microfrontends', years: 1, description: 'Governança e autonomia', iconId: 'mfe' },
+    { name: 'Microfrontends', years: 3, description: 'Governança e autonomia', iconId: 'mfe' },
+    { name: 'Kotlin', years: 2, description: 'Android nativo', iconId: 'kotlin' },
+    { name: 'CI/CD · GitHub Actions', years: 4, description: 'Pipelines enterprise', iconId: 'githubActions' },
+    {
+      name: 'Arquitetura de Software',
+      years: 3,
+      description: 'Microfrontends e sistemas escaláveis',
+      iconId: 'architecture',
+    },
   ];
 
   // Duplicado para loop infinito sem corte visível
