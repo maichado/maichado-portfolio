@@ -1,4 +1,11 @@
 <div class="cursor" aria-hidden="true">
-  <div #dot class="cursor__dot"></div>
-  <div #ring class="cursor__ring"></div>
+  <div #shell class="cursor__shell">
+    <div class="cursor__frame">
+      <span class="cursor__corner cursor__corner--tl"></span>
+      <span class="cursor__corner cursor__corner--tr"></span>
+      <span class="cursor__corner cursor__corner--br"></span>
+      <span class="cursor__corner cursor__corner--bl"></span>
+    </div>
+  </div>
+  <div #dot class="cursor__pivot"></div>
 </div>
