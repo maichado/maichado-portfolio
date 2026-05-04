@@ -16,7 +16,7 @@ import { SectionAnchorDirective } from '../../shared/directives/section-anchor.d
 
 const TYPEWRITER_PHRASES = [
   'Líder Técnico Frontend',
-  'Consultor de Soluções Digitais',
+  'Consultor de Soluções Digitais V',
   'Referência em Angular no Bradesco',
 ];
 
