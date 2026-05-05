@@ -8,6 +8,7 @@ import {
   inject,
   PLATFORM_ID,
   signal,
+  HostListener,
   viewChild,
   viewChildren,
 } from '@angular/core';
@@ -68,6 +69,12 @@ export class SiteHeaderComponent {
 
   protected toggleMenu(): void {
     this.menuOpen.update((v) => !v);
+  }
+
+  @HostListener('document:keydown', ['$event'])
+  protected onDocumentKeydown(e: KeyboardEvent): void {
+    if (e.key !== 'Escape' || !this.menuOpen()) return;
+    this.menuOpen.set(false);
   }
 
   private updatePill(): void {

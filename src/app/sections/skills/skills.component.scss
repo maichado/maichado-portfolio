@@ -190,3 +190,17 @@
     width: auto;
   }
 }
+
+.skills--marquee-paused .marquee__track {
+  animation-play-state: paused;
+}
+
+@media (max-width: 640px) {
+  .chip__body {
+    white-space: normal;
+  }
+
+  .chip__sub {
+    flex-wrap: wrap;
+  }
+}

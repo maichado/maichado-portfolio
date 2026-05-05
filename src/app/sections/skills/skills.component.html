@@ -1,4 +1,10 @@
-<section class="skills" id="skills" appSectionAnchor="skills" aria-labelledby="skills-heading">
+<section
+  class="skills"
+  id="skills"
+  appSectionAnchor="skills"
+  aria-labelledby="skills-heading"
+  [class.skills--marquee-paused]="marqueePaused()"
+>
   <div class="skills__head">
     <p class="skills__kicker" appReveal>
       <span class="skills__kicker-num">01</span>
@@ -12,7 +18,7 @@
     </p>
   </div>
 
-  <div class="skills__marquees" aria-hidden="true">
+  <div #marqueeZone class="skills__marquees" aria-hidden="true">
     <ng-container *ngTemplateOutlet="row; context: { items: looped, dir: 'left' }"></ng-container>
     <ng-container *ngTemplateOutlet="row; context: { items: loopedReversed, dir: 'right' }"></ng-container>
   </div>

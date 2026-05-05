@@ -1,5 +1,5 @@
-import { NgTemplateOutlet } from '@angular/common';
-import { Component } from '@angular/core';
+import { isPlatformBrowser, NgTemplateOutlet } from '@angular/common';
+import { afterNextRender, Component, ElementRef, inject, OnDestroy, PLATFORM_ID, signal, viewChild } from '@angular/core';
 import { RevealDirective } from '../../shared/directives/reveal.directive';
 import { SectionAnchorDirective } from '../../shared/directives/section-anchor.directive';
 
@@ -26,7 +26,14 @@ interface SkillChip {
   templateUrl: './skills.component.html',
   styleUrl: './skills.component.scss',
 })
-export class SkillsComponent {
+export class SkillsComponent implements OnDestroy {
+  private readonly platformId = inject(PLATFORM_ID);
+  private readonly marqueesZone = viewChild<ElementRef<HTMLElement>>('marqueeZone');
+  private marqueeObserver?: IntersectionObserver;
+
+  /** Em true quando as marquees estão fora da viewport — animação pausada */
+  protected readonly marqueePaused = signal(false);
+
   protected readonly skills: readonly SkillChip[] = [
     { name: 'Angular', years: 5, description: 'Arquitetura e times', iconId: 'angular' },
     { name: 'Flutter', years: 5, description: 'Apps críticos offline', iconId: 'flutter' },
@@ -51,4 +58,24 @@ export class SkillsComponent {
   // Linha 2 invertida para direção oposta
   protected readonly reversed = [...this.skills].reverse();
   protected readonly loopedReversed = [...this.reversed, ...this.reversed];
+
+  constructor() {
+    afterNextRender(() => {
+      if (!isPlatformBrowser(this.platformId)) return;
+      const zone = this.marqueesZone()?.nativeElement;
+      if (!zone) return;
+
+      this.marqueeObserver = new IntersectionObserver(
+        ([e]) => {
+          this.marqueePaused.set(!(e?.isIntersecting ?? false));
+        },
+        { rootMargin: '60px', threshold: 0 },
+      );
+      this.marqueeObserver.observe(zone);
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.marqueeObserver?.disconnect();
+  }
 }

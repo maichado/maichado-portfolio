@@ -34,9 +34,9 @@ export class AboutComponent {
 
   protected readonly milestones: readonly Milestone[] = [
     { period: '2024 — atual', company: 'Capgemini · Bradesco', role: 'Líder Técnico Angular 19 · Microfrontends' },
-    { period: '2023 — 2024', company: 'Bombeiros SP', role: 'Flutter crítico offline-first' },
-    { period: '2022 — 2023', company: 'Volkswagen', role: 'React Native · VWeu / FsConecta' },
-    { period: '2021 — 2022', company: 'Bradesco Seguros · BITZ', role: 'Ionic · Open Finance' },
+    { period: '2023 — 2024', company: 'Capgemini · Bombeiros SP', role: 'Flutter crítico offline-first' },
+    { period: '2022 — 2023', company: 'Capgemini · Volkswagen', role: 'React Native · VWeu / FsConecta' },
+    { period: '2021 — 2022', company: 'Capgemini · Bradesco Seguros · BITZ', role: 'Ionic · Open Finance' },
     { period: '2020 — 2021', company: 'Pulsati', role: 'Telemedicina Rede D\'Or' },
     { period: '2019 — 2020', company: 'Nexello', role: 'Dois apps Flutter publicados' },
     { period: '2018 — 2019', company: 'Webmais', role: 'Início de carreira aos 17' },
