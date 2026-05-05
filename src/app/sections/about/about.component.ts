@@ -38,8 +38,8 @@ export class AboutComponent {
     { period: '2022 — 2023', company: 'Capgemini · Volkswagen', role: 'React Native · VWeu / FsConecta' },
     { period: '2021 — 2022', company: 'Capgemini · Bradesco Seguros · BITZ', role: 'Ionic · Open Finance' },
     { period: '2020 — 2021', company: 'Pulsati', role: 'Telemedicina Rede D\'Or' },
-    { period: '2019 — 2020', company: 'Nexello', role: 'Dois apps Flutter publicados' },
-    { period: '2018 — 2019', company: 'Webmais', role: 'Início de carreira aos 17' },
+    { period: '2019 — 2020', company: 'Nexello', role: 'Angular e Flutter · Desenvolvimento Web e Mobile' },
+    { period: '2018 — 2019', company: 'Webmais', role: 'Service Desk - Início de carreira' },
   ];
 
   constructor() {
