@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700&display=swap');
+
 .projects {
   padding: var(--section-pad-y) clamp(var(--space-4), 5vw, var(--space-12));
   scroll-margin-top: calc(var(--header-height) + var(--space-4));
@@ -98,17 +100,17 @@
 
 .projects__grid {
   display: grid;
-  gap: var(--space-6);
+  gap: 16px;
   grid-template-columns: 1fr;
 }
 
-@media (min-width: 720px) {
+@media (min-width: 641px) {
   .projects__grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media (min-width: 1100px) {
+@media (min-width: 1025px) {
   .projects__grid {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -119,168 +121,263 @@
 }
 
 .project-card {
+  --project-card-bg: #0f0f0f;
+
   position: relative;
   display: flex;
   flex-direction: column;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-2xl);
-  background: var(--color-surface);
-  overflow: hidden;
-  transition: border-color var(--duration-base) ease;
+  height: 100%;
+  min-height: 0;
+  transition: transform 350ms ease;
 }
 
-.project-card:hover {
-  border-color: color-mix(in srgb, var(--color-accent) 35%, var(--color-border));
+@media (prefers-reduced-motion: reduce) {
+  .project-card {
+    transition-duration: 0ms;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .project-card:hover,
+  .project-card:focus-within {
+    transform: translateY(-6px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-card:hover,
+  .project-card:focus-within {
+    transform: none;
+  }
+}
+
+.project-card__tilt {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 20px;
+  background: var(--project-card-bg);
+  overflow: hidden;
+  box-shadow: none;
+  transition:
+    border-color 350ms ease,
+    box-shadow 350ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-card__tilt {
+    transition-duration: 0ms;
+  }
+}
+
+.project-card:hover .project-card__tilt,
+.project-card:focus-within .project-card__tilt {
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .project-card:hover .project-card__tilt,
+  .project-card:focus-within .project-card__tilt {
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-card:hover .project-card__tilt,
+  .project-card:focus-within .project-card__tilt {
+    box-shadow: none;
+  }
 }
 
 .project-card__cover {
   position: relative;
-  aspect-ratio: 16 / 13;
-  display: grid;
-  place-items: center;
+  height: 200px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
+  background-color: #0a0a0a;
 }
 
-.project-card--featured .project-card__cover {
-  aspect-ratio: 16 / 8;
+.projects__grid > .project-card:nth-child(1) .project-card__cover,
+.projects__grid > .project-card:nth-child(2) .project-card__cover {
+  height: 260px;
 }
 
-/* Cover mais alto no Bombeiros (coluna única — aproxima proporção visual do Bradesco em destaque) */
-.project-card--bombeiros .project-card__cover {
-  aspect-ratio: 16 / 12;
+/* ICEF: luz vermelha na moldura inteira do cover (antes o blur ficava só atrás da marca) */
+.project-card--bradesco-icef .project-card__cover {
+  box-shadow:
+    inset 0 0 0 1px rgba(229, 23, 63, 0.14),
+    inset 0 -28px 72px rgba(204, 0, 0, 0.14);
 }
 
-@media (min-width: 720px) {
-  .project-card--bombeiros .project-card__cover {
-    aspect-ratio: 14 / 12;
-  }
-}
-
-.project-card--volkswagen .project-card__cover,
-.project-card--rede-dor .project-card__cover,
-.project-card--sales-sense .project-card__cover,
-.project-card--nexello .project-card__cover {
-  aspect-ratio: 16 / 12;
-}
-
-@media (min-width: 720px) {
-  .project-card--volkswagen .project-card__cover,
-  .project-card--rede-dor .project-card__cover,
-  .project-card--sales-sense .project-card__cover,
-  .project-card--nexello .project-card__cover {
-    aspect-ratio: 16 / 13;
-  }
-}
-
-.project-card__cover-title {
-  position: relative;
-  z-index: 1;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-weight: 700;
-  font-size: clamp(1.6rem, 3vw, 2.4rem);
-  letter-spacing: -0.03em;
-  text-align: center;
-  padding: 0 var(--space-6);
-  color: rgba(255, 255, 255, 0.92);
-  text-shadow: 0 2px 28px rgba(0, 0, 0, 0.45);
-  mix-blend-mode: overlay;
-}
-
-.project-card__cover-noise {
+.project-card--bradesco-icef .project-card__cover::before {
+  content: '';
   position: absolute;
   inset: 0;
-  background-image:
-    radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1.2px),
-    radial-gradient(rgba(0, 0, 0, 0.25) 1px, transparent 1.2px);
-  background-size: 4px 4px, 6px 6px;
-  background-position: 0 0, 2px 3px;
-  mix-blend-mode: overlay;
-  opacity: 0.7;
+  z-index: 0;
   pointer-events: none;
+  background:
+    radial-gradient(ellipse 118% 92% at 50% 44%, rgba(204, 0, 0, 0.26) 0%, transparent 62%),
+    radial-gradient(circle at 6% 22%, rgba(204, 0, 0, 0.22) 0%, transparent 55%),
+    radial-gradient(circle at 94% 76%, rgba(255, 26, 51, 0.16) 0%, transparent 55%);
+}
+
+.project-card--bradesco-icef .bradesco-art {
+  z-index: 1;
+}
+
+.project-card--bradesco-icef:hover .project-card__cover,
+.project-card--bradesco-icef:focus-within .project-card__cover {
+  box-shadow:
+    inset 0 0 0 1px rgba(229, 23, 63, 0.24),
+    inset 0 -32px 84px rgba(204, 0, 0, 0.18);
+}
+
+.project-card--bradesco-icef .bradesco-art__container::before {
+  width: min(130%, 620px);
+  height: min(130%, 520px);
+  filter: blur(88px);
 }
 
 .project-card__cover::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, transparent 60%, rgba(0, 0, 0, 0.5));
+  z-index: 3;
   pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    transparent 40%,
+    rgba(15, 15, 15, 0.6) 75%,
+    #0f0f0f 100%
+  );
 }
 
-/* Cover claro (VW + Rede D'Or + Sales Sense + Nexello): vinheta suave para o corpo escuro do card */
-.project-card--volkswagen .project-card__cover::after,
-.project-card--rede-dor .project-card__cover::after,
-.project-card--sales-sense .project-card__cover::after,
-.project-card--nexello .project-card__cover::after {
-  background: linear-gradient(180deg, transparent 55%, rgba(15, 23, 42, 0.08) 82%, rgba(15, 23, 42, 0.14) 100%);
+.project-card__cover-title {
+  position: relative;
+  z-index: 4;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.45rem, 3vw, 2.15rem);
+  letter-spacing: -0.03em;
+  text-align: center;
+  padding: 0 var(--space-6);
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 2px 28px rgba(0, 0, 0, 0.5);
 }
 
-.project-card--volkswagen .project-card__cover-noise,
-.project-card--rede-dor .project-card__cover-noise,
-.project-card--sales-sense .project-card__cover-noise,
-.project-card--nexello .project-card__cover-noise {
-  opacity: 0.45;
-  mix-blend-mode: multiply;
+.project-card__cover-noise {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background-image:
+    radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1.2px),
+    radial-gradient(rgba(0, 0, 0, 0.25) 1px, transparent 1.2px);
+  background-size: 4px 4px, 6px 6px;
+  background-position: 0 0, 2px 3px;
+  mix-blend-mode: normal;
+  opacity: 0.22;
+  pointer-events: none;
 }
 
 .project-card__body {
   position: relative;
-  padding: var(--space-6) var(--space-6) var(--space-6);
+  padding: 0 22px 24px;
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
+  gap: 0;
   flex: 1;
+  background: var(--project-card-bg);
+  border-radius: 0 0 20px 20px;
 }
 
 .project-card__meta {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: var(--space-3);
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--color-text-muted);
-  flex-wrap: wrap;
+  width: 100%;
 }
 
-.project-card__badge {
+.project-card__period {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+  opacity: 0.35;
+}
+
+.project-card__capgemini {
+  flex-shrink: 0;
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
-  padding: 0.2rem 0.55rem;
-  border-radius: var(--radius-full);
-  border: 1px solid color-mix(in srgb, var(--color-accent) 28%, var(--color-border-strong));
-  background: color-mix(in srgb, var(--color-accent) 10%, transparent);
-  color: color-mix(in srgb, var(--color-text-primary) 82%, var(--color-accent));
-}
-
-.project-card__badge-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: var(--radius-full);
-  background: color-mix(in srgb, var(--color-accent) 78%, white);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent) 18%, transparent);
-}
-
-.project-card__divider {
-  width: 4px;
-  height: 4px;
-  border-radius: var(--radius-full);
-  background: var(--color-text-dim);
+  padding: 3px 8px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: transparent;
+  font-size: 0.5625rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .project-card__title {
-  margin: 0;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: clamp(1.2rem, 2vw, 1.55rem);
-  line-height: 1.2;
+  margin: 6px 0 0;
+  padding: 0;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 1.125rem;
+  line-height: 1.25;
+  color: #fff;
+  letter-spacing: -0.01em;
+}
+
+.project-card__divider {
+  flex-shrink: 0;
+  height: 1px;
+  margin: 14px 0;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.project-card__metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 16px;
+}
+
+.project-card__metric {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.project-card__metric-label {
+  margin-bottom: 3px;
+  font-size: 0.5625rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.28);
+}
+
+.project-card__metric-value {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: 0.01em;
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .project-card__context {
-  margin: 0;
-  color: color-mix(in srgb, var(--color-text-muted) 92%, white);
-  font-size: 0.9rem;
+  margin: 12px 0 0;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.875rem;
   line-height: 1.45;
 }
 
@@ -301,21 +398,21 @@
 .project-card:focus-within .project-card__overlay {
   max-height: 320px;
   opacity: 1;
-  margin-top: var(--space-2);
+  margin-top: var(--space-4);
 }
 
-@media (max-width: 720px) {
+@media (max-width: 640px) {
   .project-card__overlay {
     max-height: 320px;
     opacity: 1;
-    margin-top: var(--space-2);
+    margin-top: var(--space-4);
   }
 }
 
 .project-card__desc {
   margin: 0;
-  color: var(--color-text-muted);
-  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.925rem;
   line-height: 1.55;
 }
 
@@ -386,17 +483,17 @@
   height: 250px;
   top: -20%;
   left: -10%;
-  background: #cc092f;
-  opacity: 0.5;
+  background: #cc0000;
+  opacity: 0.22;
 }
 
 .bradesco-art__orb--2 {
   width: 180px;
   height: 180px;
-  background: #ff4d4d;
+  background: #ff1a33;
   bottom: -10%;
   right: -10%;
-  opacity: 0.3;
+  opacity: 0.14;
   animation-duration: 15s;
   animation-direction: alternate-reverse;
 }
@@ -415,6 +512,23 @@
   justify-content: center;
   width: 100%;
   height: 100%;
+}
+
+.bradesco-art__container::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  height: 70%;
+  border-radius: 50%;
+  pointer-events: none;
+  background: #cc0000;
+  opacity: 0.2;
+  filter: blur(70px);
+  transition: opacity 400ms ease;
 }
 
 /* Arte especial Bombeiros SP (emblema — orbs + peça central com profundidade) */
@@ -439,8 +553,8 @@
   height: 240px;
   top: -18%;
   left: -10%;
-  background: #ef4444;
-  opacity: 0.48;
+  background: #cc0000;
+  opacity: 0.22;
 }
 
 .bombeiros-art__orb--2 {
@@ -448,8 +562,8 @@
   height: 200px;
   bottom: -14%;
   right: -10%;
-  background: #fecaca;
-  opacity: 0.32;
+  background: #ff3333;
+  opacity: 0.14;
   animation-duration: 18s;
   animation-direction: alternate-reverse;
 }
@@ -465,15 +579,25 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 70%;
-  height: 70%;
+  width: 100%;
+  height: 100%;
 }
 
-@media (min-width: 720px) {
-  .bombeiros-art__container {
-    width: 80%;
-    height: 80%;
-  }
+.bombeiros-art__container::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  height: 70%;
+  border-radius: 50%;
+  pointer-events: none;
+  background: #cc0000;
+  opacity: 0.2;
+  filter: blur(70px);
+  transition: opacity 400ms ease;
 }
 
 /* Arte cover claro: Volkswagen, Rede D'Or, Sales Sense, Nexello; + Bradesco Seguros / BITZ (fundo escuro) */
@@ -511,24 +635,42 @@
   animation: bradesco-drift 12s infinite alternate ease-in-out;
 }
 
-.vw-art__orb--1,
-.rede-art__orb--1 {
+.vw-art__orb--1 {
   width: 280px;
   height: 280px;
   top: -22%;
   right: -10%;
   background: #001e50;
-  opacity: 0.16;
+  opacity: 0.28;
 }
 
-.vw-art__orb--2,
+.vw-art__orb--2 {
+  width: 260px;
+  height: 260px;
+  bottom: -18%;
+  left: -14%;
+  background: #4895ff;
+  opacity: 0.2;
+  animation-duration: 19s;
+  animation-direction: alternate-reverse;
+}
+
+.rede-art__orb--1 {
+  width: 280px;
+  height: 280px;
+  top: -22%;
+  right: -10%;
+  background: #0057ff;
+  opacity: 0.24;
+}
+
 .rede-art__orb--2 {
   width: 260px;
   height: 260px;
   bottom: -18%;
   left: -14%;
-  background: #60a5fa;
-  opacity: 0.22;
+  background: #3d87ff;
+  opacity: 0.18;
   animation-duration: 19s;
   animation-direction: alternate-reverse;
 }
@@ -538,8 +680,8 @@
   height: 280px;
   top: -22%;
   right: -10%;
-  background: #8b5cf6;
-  opacity: 0.14;
+  background: #6c3fc5;
+  opacity: 0.22;
 }
 
 .nexello-art__orb--2 {
@@ -547,8 +689,8 @@
   height: 260px;
   bottom: -18%;
   left: -14%;
-  background: #c4b5fd;
-  opacity: 0.18;
+  background: #9b73e8;
+  opacity: 0.16;
   animation-duration: 19s;
   animation-direction: alternate-reverse;
 }
@@ -558,8 +700,8 @@
   height: 280px;
   top: -22%;
   right: -10%;
-  background: #001e50;
-  opacity: 0.16;
+  background: #0057ff;
+  opacity: 0.24;
 }
 
 .sales-sense-art__orb--2 {
@@ -567,8 +709,8 @@
   height: 260px;
   bottom: -18%;
   left: -14%;
-  background: #60a5fa;
-  opacity: 0.22;
+  background: #3d87ff;
+  opacity: 0.18;
   animation-duration: 19s;
   animation-direction: alternate-reverse;
 }
@@ -578,8 +720,8 @@
   height: 250px;
   top: -20%;
   left: -10%;
-  background: #cc092f;
-  opacity: 0.5;
+  background: #cc0000;
+  opacity: 0.26;
 }
 
 .seguros-art__orb--2 {
@@ -587,8 +729,8 @@
   height: 180px;
   bottom: -10%;
   right: -10%;
-  background: #ff4d4d;
-  opacity: 0.3;
+  background: #ff2a30;
+  opacity: 0.17;
   animation-duration: 15s;
   animation-direction: alternate-reverse;
 }
@@ -598,8 +740,8 @@
   height: 250px;
   top: -20%;
   right: -8%;
-  background: #cc092f;
-  opacity: 0.48;
+  background: #ff6b00;
+  opacity: 0.26;
 }
 
 .bitz-art__orb--2 {
@@ -607,8 +749,8 @@
   height: 180px;
   bottom: -10%;
   left: -10%;
-  background: #ff4d4d;
-  opacity: 0.28;
+  background: #ffb04a;
+  opacity: 0.18;
   animation-duration: 15s;
   animation-direction: alternate-reverse;
 }
@@ -633,53 +775,135 @@
   height: 100%;
 }
 
-@media (min-width: 720px) {
-  .vw-art__container,
-  .rede-art__container,
-  .sales-sense-art__container,
-  .nexello-art__container,
-  .seguros-art__container,
-  .bitz-art__container {
-    width: 100%;
-    height: 100%;
-  }
+.vw-art__container::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  height: 70%;
+  border-radius: 50%;
+  pointer-events: none;
+  background: #1e3a7a;
+  opacity: 0.2;
+  filter: blur(70px);
+  transition: opacity 400ms ease;
 }
 
-/* Marca plana no cover (sem pilha 3D nem animação de rotação) */
+.rede-art__container::before,
+.sales-sense-art__container::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  height: 70%;
+  border-radius: 50%;
+  pointer-events: none;
+  background: #0057ff;
+  opacity: 0.2;
+  filter: blur(70px);
+  transition: opacity 400ms ease;
+}
+
+.nexello-art__container::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  height: 70%;
+  border-radius: 50%;
+  pointer-events: none;
+  background: #6c3fc5;
+  opacity: 0.2;
+  filter: blur(70px);
+  transition: opacity 400ms ease;
+}
+
+.seguros-art__container::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  height: 70%;
+  border-radius: 50%;
+  pointer-events: none;
+  background: #cc0000;
+  opacity: 0.2;
+  filter: blur(70px);
+  transition: opacity 400ms ease;
+}
+
+.bitz-art__container::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  height: 70%;
+  border-radius: 50%;
+  pointer-events: none;
+  background: #ff6b00;
+  opacity: 0.2;
+  filter: blur(70px);
+  transition: opacity 400ms ease;
+}
+
+.project-card:hover .bradesco-art__container::before,
+.project-card:focus-within .bradesco-art__container::before,
+.project-card:hover .bombeiros-art__container::before,
+.project-card:focus-within .bombeiros-art__container::before,
+.project-card:hover .vw-art__container::before,
+.project-card:focus-within .vw-art__container::before,
+.project-card:hover .rede-art__container::before,
+.project-card:focus-within .rede-art__container::before,
+.project-card:hover .sales-sense-art__container::before,
+.project-card:focus-within .sales-sense-art__container::before,
+.project-card:hover .nexello-art__container::before,
+.project-card:focus-within .nexello-art__container::before,
+.project-card:hover .seguros-art__container::before,
+.project-card:focus-within .seguros-art__container::before,
+.project-card:hover .bitz-art__container::before,
+.project-card:focus-within .bitz-art__container::before {
+  opacity: 0.4;
+}
+
+/* Marca plana no cover */
 .project-card__cover-mark {
   position: relative;
-  z-index: 2;
+  z-index: 1;
   display: block;
   width: auto;
   height: auto;
-  max-width: min(84%, 340px);
+  max-width: 55%;
+  max-height: 55%;
   margin: 0 auto;
   object-fit: contain;
-  filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.14));
+  filter: brightness(0.95) contrast(1.05);
 }
 
 .project-card__cover-mark--bradesco {
-  width: clamp(220px, 76%, 460px);
-  max-width: 460px;
+  width: auto;
+  max-width: 55%;
   height: auto;
-  filter: drop-shadow(0 3px 14px rgba(0, 0, 0, 0.22));
-}
-
-.project-card--volkswagen .project-card__cover-mark {
-  max-width: min(74%, 220px);
-}
-
-.project-card--sales-sense .project-card__cover-mark {
-  max-width: min(74%, 200px);
-}
-
-.project-card--bradesco-seguros .project-card__cover-mark,
-.project-card--bitz-open-finance .project-card__cover-mark {
-  max-width: min(86%, 320px);
+  filter: brightness(0.95) contrast(1.05);
 }
 
 .bombeiros-art .project-card__cover-mark {
-  max-width: min(72%, 300px);
+  max-width: 55%;
+  max-height: 55%;
   aspect-ratio: 1;
   border-radius: 50%;
 }

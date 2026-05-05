@@ -23,7 +23,6 @@ export class LoaderComponent {
   readonly finished = output<void>();
 
   protected readonly visible = signal(true);
-  protected readonly progress = signal(0);
 
   constructor() {
     afterNextRender(() => {
@@ -39,24 +38,8 @@ export class LoaderComponent {
       }
 
       const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (reduced) {
-        this.progress.set(100);
-        window.setTimeout(() => this.dismiss(), 200);
-        return;
-      }
-
-      const start = performance.now();
-      const tick = (now: number) => {
-        const t = Math.min(1, (now - start) / MIN_DURATION_MS);
-        const eased = 1 - Math.pow(1 - t, 2.4);
-        this.progress.set(Math.round(eased * 100));
-        if (t < 1) {
-          requestAnimationFrame(tick);
-        } else {
-          window.setTimeout(() => this.dismiss(), 200);
-        }
-      };
-      requestAnimationFrame(tick);
+      const delay = reduced ? 200 : MIN_DURATION_MS;
+      window.setTimeout(() => this.dismiss(), delay);
     });
   }
 

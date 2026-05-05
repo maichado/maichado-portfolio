@@ -33,19 +33,23 @@
           class="project-card"
           [class.project-card--featured]="p.featured"
           [class.project-card--bombeiros]="p.id === 'bombeiros-sp'"
+          [class.project-card--bradesco-icef]="p.id === 'bradesco-icef'"
           [class.project-card--volkswagen]="p.id === 'volkswagen'"
           [class.project-card--bradesco-seguros]="p.id === 'bradesco-seguros'"
           [class.project-card--bitz-open-finance]="p.id === 'bitz-open-finance'"
           [class.project-card--rede-dor]="p.id === 'pulsati-rede-dor'"
           [class.project-card--sales-sense]="p.id === 'sales-sense-app'"
           [class.project-card--nexello]="p.id === 'nexello-apps'"
-          appTilt
-          [tiltMax]="6"
-          [tiltScale]="1.015"
           role="listitem"
           data-cursor
         >
-          <div class="project-card__cover" [style.background]="p.cover" aria-hidden="true">
+          <div
+            class="project-card__tilt"
+            appTilt
+            [tiltMax]="6"
+            [tiltScale]="1.015"
+          >
+          <div class="project-card__cover" aria-hidden="true">
             @if (p.id === 'bradesco-icef') {
               <div class="bradesco-art">
                 <div class="bradesco-art__orb bradesco-art__orb--1"></div>
@@ -193,16 +197,22 @@
           <div class="project-card__body">
             <div class="project-card__meta">
               <span class="project-card__period">{{ p.period }}</span>
-              <span class="project-card__divider" aria-hidden="true"></span>
-              <span class="project-card__client">{{ p.client }}</span>
               @if (p.viaCapgemini) {
-                <span class="project-card__badge" aria-label="Via Capgemini">
-                  <span class="project-card__badge-dot" aria-hidden="true"></span>
-                  Via Capgemini
-                </span>
+                <span class="project-card__capgemini">Via Capgemini</span>
               }
             </div>
             <h3 class="project-card__title">{{ p.title }}</h3>
+            <div class="project-card__divider" aria-hidden="true"></div>
+
+            <div class="project-card__metrics" aria-label="Métricas do projeto">
+              @for (m of p.metrics; track m.label) {
+                <div class="project-card__metric">
+                  <span class="project-card__metric-label">{{ m.label }}</span>
+                  <span class="project-card__metric-value">{{ m.value }}</span>
+                </div>
+              }
+            </div>
+
             @if (p.id === 'bradesco-icef') {
               <p class="project-card__context">
                 Alocado via Capgemini Brasil para arquitetura de plataforma enterprise.
@@ -227,6 +237,7 @@
                 </div>
               }
             </div>
+          </div>
           </div>
         </article>
       }

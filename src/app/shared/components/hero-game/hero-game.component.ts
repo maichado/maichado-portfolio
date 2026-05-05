@@ -85,6 +85,13 @@ export class HeroGameComponent implements OnDestroy {
 
   private prevOverflow = '';
   private prevTouchAction = '';
+  private prevPosition = '';
+  private prevTop = '';
+  private prevLeft = '';
+  private prevRight = '';
+  private prevWidth = '';
+  private lockedScrollY = 0;
+  private scrollLockActive = false;
 
   private readonly onPointerMove = (e: PointerEvent) => {
     if (this.status() === 'idle') return;
@@ -133,22 +140,49 @@ export class HeroGameComponent implements OnDestroy {
       this.drawFrame(); // desenho inicial (idle)
     });
 
-    // trava scroll do body quando modal abre
+    // Modal: trava scroll mantendo a posição (evita backdrop “errado” com página scrollada + iOS).
     effect(() => {
       if (!isPlatformBrowser(this.platformId)) return;
       const isOpen = this.open();
       const body = this.document.body;
+      const html = this.document.documentElement;
 
       if (isOpen) {
-        this.prevOverflow = body.style.overflow;
-        this.prevTouchAction = body.style.touchAction;
+        this.lockedScrollY = window.scrollY || html.scrollTop;
+        if (!this.scrollLockActive) {
+          this.prevOverflow = body.style.overflow;
+          this.prevTouchAction = body.style.touchAction;
+          this.prevPosition = body.style.position;
+          this.prevTop = body.style.top;
+          this.prevLeft = body.style.left;
+          this.prevRight = body.style.right;
+          this.prevWidth = body.style.width;
+          this.scrollLockActive = true;
+        }
+
         body.style.overflow = 'hidden';
-        // reduz bounce/scroll gestures em mobile enquanto o modal está aberto
         body.style.touchAction = 'none';
-      } else {
-        body.style.overflow = this.prevOverflow;
-        body.style.touchAction = this.prevTouchAction;
+        body.style.position = 'fixed';
+        body.style.top = `-${this.lockedScrollY}px`;
+        body.style.left = '0';
+        body.style.right = '0';
+        body.style.width = '100%';
+        return;
       }
+
+      if (!this.scrollLockActive) return;
+
+      this.scrollLockActive = false;
+      body.style.overflow = this.prevOverflow;
+      body.style.touchAction = this.prevTouchAction;
+      body.style.position = this.prevPosition;
+      body.style.top = this.prevTop;
+      body.style.left = this.prevLeft;
+      body.style.right = this.prevRight;
+      body.style.width = this.prevWidth;
+
+      const y = this.lockedScrollY;
+      window.requestAnimationFrame(() => window.scrollTo(0, y));
     });
   }
 
@@ -158,9 +192,17 @@ export class HeroGameComponent implements OnDestroy {
     this.detachObservers();
     this.detachListeners();
     this.document.removeEventListener('visibilitychange', this.onVisibility);
-    // garante que o scroll volte ao normal
-    this.document.body.style.overflow = this.prevOverflow;
-    this.document.body.style.touchAction = this.prevTouchAction;
+    if (!this.scrollLockActive) return;
+    this.scrollLockActive = false;
+    const body = this.document.body;
+    body.style.overflow = this.prevOverflow;
+    body.style.touchAction = this.prevTouchAction;
+    body.style.position = this.prevPosition;
+    body.style.top = this.prevTop;
+    body.style.left = this.prevLeft;
+    body.style.right = this.prevRight;
+    body.style.width = this.prevWidth;
+    window.scrollTo(0, this.lockedScrollY);
   }
 
   protected openModal(): void {
@@ -181,20 +223,30 @@ export class HeroGameComponent implements OnDestroy {
     if (!isPlatformBrowser(this.platformId)) return;
     if (!this.ctx) this.setupCanvas();
     this.open.set(true);
-    // modal central => canvas só tem tamanho correto após render/layout
     this.status.set('playing');
-    requestAnimationFrame(() => {
-      this.resize();
-      this.resetGame();
-      this.startLoop();
-    });
+    // Dois frames: após abrir o modal/layout flex o canvas costuma medir 0×0 no primeiro RAF.
+    requestAnimationFrame(() =>
+      requestAnimationFrame(() => {
+        this.resize();
+        this.resetGame();
+        this.startLoop();
+      }),
+    );
   }
 
   protected restart(): void {
     if (this.status() === 'idle') return;
-    this.resetGame();
-    this.status.set('playing');
-    this.startLoop();
+    requestAnimationFrame(() =>
+      requestAnimationFrame(() => {
+        this.resize();
+        this.resetGame();
+        this.status.set('playing');
+        this.lastTs = performance.now();
+        if (!this.running) {
+          this.startLoop();
+        }
+      }),
+    );
   }
 
   protected togglePause(): void {
@@ -249,8 +301,8 @@ export class HeroGameComponent implements OnDestroy {
     this.intersectionObserver = new IntersectionObserver(
       ([entry]) => {
         this.isVisible = entry.isIntersecting;
-        if (!this.isVisible) {
-          // pause suave quando sai do hero
+        // Com modal aberto o canvas está sobre a viewport; não pausar só porque o chip do hero saiu da área visível.
+        if (!this.isVisible && !this.open()) {
           if (this.status() === 'playing') this.status.set('paused');
         }
       },
@@ -270,19 +322,35 @@ export class HeroGameComponent implements OnDestroy {
     if (!this.ctx) return;
     const canvasEl = this.canvas().nativeElement;
     const rect = canvasEl.getBoundingClientRect();
+    let cssW = rect.width;
+    let cssH = rect.height;
+    if (cssW < 2 || cssH < 2) {
+      const stage = canvasEl.closest('.hg-modal__stage');
+      if (stage instanceof HTMLElement) {
+        cssW = Math.max(cssW, stage.clientWidth, stage.offsetWidth);
+        cssH = Math.max(cssH, stage.clientHeight, stage.offsetHeight);
+      }
+    }
+
     this.dpr = Math.min(window.devicePixelRatio || 1, 2);
-    this.width = Math.max(1, Math.round(rect.width));
-    this.height = Math.max(1, Math.round(rect.height));
+    this.width = Math.max(32, Math.round(cssW));
+    this.height = Math.max(32, Math.round(cssH));
+
     canvasEl.width = Math.round(this.width * this.dpr);
     canvasEl.height = Math.round(this.height * this.dpr);
     this.ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
 
-    // player defaults
+    const pad = this.pr + 2;
     if (this.px === 0 && this.py === 0) {
       this.px = this.width * 0.5;
       this.py = this.height * 0.6;
       this.tx = this.px;
       this.ty = this.py;
+    } else {
+      this.px = clamp(this.px, pad, this.width - pad);
+      this.py = clamp(this.py, pad, this.height - pad);
+      this.tx = clamp(this.tx, pad, this.width - pad);
+      this.ty = clamp(this.ty, pad, this.height - pad);
     }
   }
 
@@ -320,7 +388,8 @@ export class HeroGameComponent implements OnDestroy {
     const dt = Math.min(48, ts - this.lastTs);
     this.lastTs = ts;
 
-    if (this.status() === 'playing' && this.isVisible) {
+    // Enquanto playing/paused/over no modal, o físico não deve depender do chip do hero estar na viewport.
+    if (this.status() === 'playing') {
       this.step(dt);
     }
 

@@ -119,6 +119,12 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
 @media (pointer: fine) {
   body.is-custom-cursor {
     cursor: none;
@@ -190,7 +196,6 @@ button {
     opacity 0.9s var(--ease-out-quint),
     transform 0.9s var(--ease-out-quint);
   transition-delay: var(--reveal-delay, 0ms);
-  will-change: opacity, transform;
 }
 
 [data-reveal].is-revealed {

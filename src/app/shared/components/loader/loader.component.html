@@ -1,18 +1,22 @@
 @if (visible()) {
   <div class="loader" role="status" aria-live="polite" aria-busy="true">
-    <div class="loader__brand">
-      <span class="loader__mark">MM</span>
-      <span class="loader__divider" aria-hidden="true"></span>
-      <span class="loader__name">Maicon Machado</span>
-    </div>
+    <span class="visually-hidden">A carregar o portfólio de Maicon Machado.</span>
 
-    <div class="loader__bar" aria-hidden="true">
-      <div class="loader__fill" [style.width.%]="progress()"></div>
-    </div>
-
-    <div class="loader__meta">
-      <span class="loader__pct">{{ progress() }}</span>
-      <span class="loader__label">carregando experiência</span>
+    <div class="loader__center">
+      <div class="loader__glow" aria-hidden="true"></div>
+      <img
+        class="loader__logo"
+        src="logo2.png"
+        alt="Maicon Machado — logotipo MM"
+        width="96"
+        height="96"
+        decoding="async"
+        fetchpriority="high"
+      />
+      <p class="loader__subtitle">Maicon Machado</p>
+      <div class="loader__shimmer" aria-hidden="true">
+        <div class="loader__shimmer-track"></div>
+      </div>
     </div>
   </div>
 }

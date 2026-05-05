@@ -12,7 +12,7 @@
 
       <div class="about__body">
         <p appReveal [delay]="120">
-          Mais de <strong>6 anos</strong> de experiência em engenharia frontend, começando aos
+          Mais de <strong>7 anos</strong> de experiência em desenvolvimento frontend, começando aos
           <strong>17 anos</strong>. Trilhei empresas onde a entrega importa: <strong>Webmais</strong>,
           <strong>Nexello</strong>, <strong>Pulsati</strong> e hoje <strong>Capgemini</strong> —
           atuando no <strong>Bradesco</strong> como referência técnica em Angular e arquiteturas
@@ -34,7 +34,23 @@
             <div class="milestone__dot" aria-hidden="true"></div>
             <div class="milestone__content">
               <p class="milestone__period">{{ m.period }}</p>
-              <p class="milestone__company">{{ m.company }}</p>
+              <p class="milestone__company milestone__company-row">
+                @if (m.company.includes('Capgemini')) {
+                  <img
+                    class="milestone__company-logo"
+                    src="capgeminijob.png"
+                    alt=""
+                    aria-hidden="true"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <span class="milestone__company-sep" aria-hidden="true">·</span>
+                  <span>{{ m.company.replace('Capgemini · ', '') }}</span>
+                }
+                @if (!m.company.includes('Capgemini')) {
+                  <span>{{ m.company }}</span>
+                }
+              </p>
               <p class="milestone__role">{{ m.role }}</p>
             </div>
           </div>
@@ -44,26 +60,28 @@
 
     <aside class="about__visual" aria-hidden="true">
       <div class="about__visual-frame" appTilt [tiltMax]="5" [tiltScale]="1.02">
-        <img src="profile.png" alt="Maicon Machado" class="about__photo">
-        <div class="about__visual-overlay"></div>
+        <div class="about__glass">
+          <img src="profile.png" alt="Maicon Machado" class="about__photo" loading="lazy" decoding="async" />
+          <div class="about__visual-overlay"></div>
+        </div>
       </div>
 
       <div class="about__highlights" appReveal [delay]="220">
         <div class="hl">
-          <span class="hl__num">6+</span>
-          <span class="hl__label">anos</span>
-        </div>
-        <div class="hl">
-          <span class="hl__num">10+</span>
-          <span class="hl__label">projetos</span>
-        </div>
-        <div class="hl">
           <span class="hl__num">7+</span>
-          <span class="hl__label">microfrontends</span>
+          <span class="hl__label">Anos de experiência</span>
         </div>
         <div class="hl">
-          <span class="hl__num">90%+</span>
-          <span class="hl__label">cobertura</span>
+          <span class="hl__num">8+</span>
+          <span class="hl__label">Projetos entregues</span>
+        </div>
+        <div class="hl">
+          <span class="hl__num">5</span>
+          <span class="hl__label">Grandes empresas atendidas</span>
+        </div>
+        <div class="hl">
+          <span class="hl__num">5+</span>
+          <span class="hl__label">Angular · React · React Native · Flutter</span>
         </div>
       </div>
     </aside>
