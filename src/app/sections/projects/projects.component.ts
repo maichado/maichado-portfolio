@@ -40,26 +40,45 @@ export class ProjectsComponent {
       const gsap = this.scroll.gsap;
       const ScrollTrigger = this.scroll.scrollTrigger;
 
-      cards.forEach((card, idx) => {
-        gsap.fromTo(
-          card,
-          { opacity: 0, y: 60 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.9,
-            delay: (idx % 3) * 0.08,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: card,
-              start: 'top 88%',
-              once: true,
-            },
-          },
-        );
-      });
+      const mobileLike = window.matchMedia('(max-width: 768px), (pointer: coarse)').matches;
 
-      // Refresh after fonts/images settle
+      if (mobileLike) {
+        gsap.set(cards, { opacity: 0, y: 36 });
+        ScrollTrigger.batch(cards, {
+          once: true,
+          start: 'top 93%',
+          fastScrollEnd: true,
+          onEnter: (batch) => {
+            gsap.to(batch, {
+              opacity: 1,
+              y: 0,
+              duration: 0.55,
+              stagger: 0.04,
+              ease: 'power2.out',
+            });
+          },
+        });
+      } else {
+        cards.forEach((card, idx) => {
+          gsap.fromTo(
+            card,
+            { opacity: 0, y: 60 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.9,
+              delay: (idx % 3) * 0.08,
+              ease: 'power3.out',
+              scrollTrigger: {
+                trigger: card,
+                start: 'top 88%',
+                once: true,
+              },
+            },
+          );
+        });
+      }
+
       window.setTimeout(() => ScrollTrigger.refresh(), 400);
     });
   }

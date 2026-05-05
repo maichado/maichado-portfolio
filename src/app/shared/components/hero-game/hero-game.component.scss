@@ -209,10 +209,16 @@
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  padding: var(--hg-modal-pad-y) clamp(var(--space-3), 4vw, var(--space-8));
-  min-height: 100dvh;
-  max-height: 100dvh;
+  padding-top: calc(var(--hg-modal-pad-y) + env(safe-area-inset-top, 0px));
+  padding-right: calc(clamp(var(--space-3), 4vw, var(--space-8)) + env(safe-area-inset-right, 0px));
+  padding-bottom: calc(var(--hg-modal-pad-y) + env(safe-area-inset-bottom, 0px));
+  padding-left: calc(clamp(var(--space-3), 4vw, var(--space-8)) + env(safe-area-inset-left, 0px));
   overflow: hidden;
+  /* --hg-visual-vh (px) atualizado pelo TS com visualViewport; fallback 100dvh */
+  min-height: 100vh;
+  max-height: 100vh;
+  min-height: calc(var(--hg-visual-vh, 100dvh));
+  max-height: calc(var(--hg-visual-vh, 100dvh));
   background: rgba(2, 4, 8, 0.72);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -227,9 +233,14 @@
 }
 
 .hg-modal__dialog {
-  /* Cabe na viewport: evita scrollbar no overlay (padding + diálogo > 100vh) */
-  width: min(560px, 92vw, calc(100dvh - 2 * var(--hg-modal-pad-y)));
-  max-height: calc(100dvh - 2 * var(--hg-modal-pad-y));
+  --hg-safe-y: calc(env(safe-area-inset-top, 0px) + env(safe-area-inset-bottom, 0px));
+  /* Cabe na viewport visível menos padding/safe-area */
+  width: min(
+    560px,
+    92vw,
+    calc(var(--hg-visual-vh, 100dvh) - 2 * var(--hg-modal-pad-y) - var(--hg-safe-y))
+  );
+  max-height: calc(var(--hg-visual-vh, 100dvh) - 2 * var(--hg-modal-pad-y) - var(--hg-safe-y));
   flex-shrink: 1;
   min-height: 0;
   aspect-ratio: 1 / 1;
@@ -428,16 +439,22 @@
 
   .hg-modal {
     --hg-modal-pad-y: var(--space-4);
-    padding: var(--hg-modal-pad-y) var(--space-4);
+    padding-top: calc(var(--hg-modal-pad-y) + env(safe-area-inset-top, 0px));
+    padding-right: calc(var(--space-4) + env(safe-area-inset-right, 0px));
+    padding-bottom: calc(var(--hg-modal-pad-y) + env(safe-area-inset-bottom, 0px));
+    padding-left: calc(var(--space-4) + env(safe-area-inset-left, 0px));
     align-items: center;
     justify-content: center;
   }
 
   .hg-modal__dialog {
-    width: 100%;
-    /* Altura limitada pela viewport (padding já descontado no max-height base) */
-    max-height: calc(100dvh - 2 * var(--hg-modal-pad-y));
-    height: min(86dvh, 720px, calc(100dvh - 2 * var(--hg-modal-pad-y)));
+    width: calc(100vw - var(--space-4) - var(--space-4) - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px));
+    max-height: calc(var(--hg-visual-vh, 100dvh) - 2 * var(--hg-modal-pad-y) - var(--hg-safe-y));
+    height: min(
+      86dvh,
+      720px,
+      calc(var(--hg-visual-vh, 100dvh) - 2 * var(--hg-modal-pad-y) - var(--hg-safe-y))
+    );
     aspect-ratio: auto;
     border-bottom-left-radius: var(--radius-xl);
     border-bottom-right-radius: var(--radius-xl);
