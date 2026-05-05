@@ -90,8 +90,8 @@ export const PROJECTS: readonly ProjectCard[] = [
       'Assumiu projeto crítico solo e garantiu todas as entregas dentro do prazo.',
     stack: ['react', 'typescript'],
     metrics: [
-      { label: 'Stack', value: 'React Native · MongoDB · REST APIs' },
-      { label: 'Atuação', value: 'Único dev mobile responsável' },
+      { label: 'Stack', value: 'React Native · iOS · REST APIs' },
+      { label: 'Atuação', value: 'Dev mobile iOS' },
       { label: 'Escopo', value: 'Reescrita completa de 2 apps corporativos' },
       { label: 'Entrega', value: 'RH · Financeiro · Benefícios · Férias' },
       { label: 'Contexto', value: 'Convocado para salvar projeto sem entrega' },
