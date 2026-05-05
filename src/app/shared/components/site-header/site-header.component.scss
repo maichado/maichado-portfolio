@@ -20,8 +20,10 @@
 /* backdrop-filter creates a containing block for fixed descendants; without this,
  * .header__overlay is clipped to the header strip and the fullscreen menu reads as "transparent". */
 .header.is-menu-open {
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  /* Avoid a transition frame where WebKit still treats fixed children as contained. */
+  transition-property: background, border-color;
   background: var(--color-bg);
   border-bottom-color: var(--color-border);
 }
@@ -186,10 +188,18 @@
 .header__overlay {
   position: fixed;
   inset: 0;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  min-height: -webkit-fill-available;
+  box-sizing: border-box;
   background: var(--color-bg);
   display: grid;
   place-items: center;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom)
+    env(safe-area-inset-left);
   z-index: 9050;
+  -webkit-overflow-scrolling: touch;
   animation: overlay-in 360ms var(--ease-out-quint);
 }
 
