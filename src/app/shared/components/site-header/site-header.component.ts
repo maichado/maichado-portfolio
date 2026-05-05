@@ -1,4 +1,4 @@
-import { isPlatformBrowser } from '@angular/common';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import {
   afterNextRender,
   Component,
@@ -30,6 +30,7 @@ interface PillStyle {
 })
 export class SiteHeaderComponent {
   private readonly platformId = inject(PLATFORM_ID);
+  private readonly document = inject(DOCUMENT);
   private readonly active = inject(ActiveSectionService);
 
   protected readonly sections = NAV_SECTIONS.filter((s) => s.id !== 'contato');
@@ -59,6 +60,23 @@ export class SiteHeaderComponent {
       if (isPlatformBrowser(this.platformId)) {
         queueMicrotask(() => this.updatePill());
       }
+    });
+
+    effect((onCleanup) => {
+      if (!isPlatformBrowser(this.platformId) || !this.menuOpen()) return;
+
+      const html = this.document.documentElement;
+      const body = this.document.body;
+      const prevHtmlOverflow = html.style.overflow;
+      const prevBodyOverflow = body.style.overflow;
+
+      html.style.overflow = 'hidden';
+      body.style.overflow = 'hidden';
+
+      onCleanup(() => {
+        html.style.overflow = prevHtmlOverflow;
+        body.style.overflow = prevBodyOverflow;
+      });
     });
   }
 

@@ -17,6 +17,15 @@
   -webkit-backdrop-filter: blur(20px) saturate(1.4);
 }
 
+/* backdrop-filter creates a containing block for fixed descendants; without this,
+ * .header__overlay is clipped to the header strip and the fullscreen menu reads as "transparent". */
+.header.is-menu-open {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  background: var(--color-bg);
+  border-bottom-color: var(--color-border);
+}
+
 .header__inner {
   position: relative;
   max-width: var(--content-max);
@@ -180,7 +189,7 @@
   background: var(--color-bg);
   display: grid;
   place-items: center;
-  z-index: 8999;
+  z-index: 9050;
   animation: overlay-in 360ms var(--ease-out-quint);
 }
 
