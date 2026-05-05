@@ -42,23 +42,7 @@ export class ProjectsComponent {
 
       const mobileLike = window.matchMedia('(max-width: 768px), (pointer: coarse)').matches;
 
-      if (mobileLike) {
-        gsap.set(cards, { opacity: 0, y: 36 });
-        ScrollTrigger.batch(cards, {
-          once: true,
-          start: 'top 93%',
-          fastScrollEnd: true,
-          onEnter: (batch) => {
-            gsap.to(batch, {
-              opacity: 1,
-              y: 0,
-              duration: 0.55,
-              stagger: 0.04,
-              ease: 'power2.out',
-            });
-          },
-        });
-      } else {
+      if (!mobileLike) {
         cards.forEach((card, idx) => {
           gsap.fromTo(
             card,
@@ -77,9 +61,8 @@ export class ProjectsComponent {
             },
           );
         });
+        window.setTimeout(() => ScrollTrigger.refresh(), 400);
       }
-
-      window.setTimeout(() => ScrollTrigger.refresh(), 400);
     });
   }
 
