@@ -90,6 +90,7 @@ export class HeroGameComponent implements OnDestroy {
   private prevLeft = '';
   private prevRight = '';
   private prevWidth = '';
+  private prevHtmlOverflow = '';
   private lockedScrollY = 0;
   private scrollLockActive = false;
 
@@ -140,8 +141,8 @@ export class HeroGameComponent implements OnDestroy {
       this.drawFrame(); // desenho inicial (idle)
     });
 
-    // Modal: trava scroll mantendo a posição (evita backdrop “errado” com página scrollada + iOS).
-    effect(() => {
+    // Modal: scroll lock body + html, altura pelo visual viewport (Safari/GitHub Pages em mobile).
+    effect((onCleanup) => {
       if (!isPlatformBrowser(this.platformId)) return;
       const isOpen = this.open();
       const body = this.document.body;
@@ -157,6 +158,7 @@ export class HeroGameComponent implements OnDestroy {
           this.prevLeft = body.style.left;
           this.prevRight = body.style.right;
           this.prevWidth = body.style.width;
+          this.prevHtmlOverflow = html.style.overflow;
           this.scrollLockActive = true;
         }
 
@@ -167,6 +169,22 @@ export class HeroGameComponent implements OnDestroy {
         body.style.left = '0';
         body.style.right = '0';
         body.style.width = '100%';
+        html.style.overflow = 'hidden';
+
+        const syncVh = () => {
+          const h = window.visualViewport?.height ?? window.innerHeight;
+          html.style.setProperty('--hg-visual-vh', `${Math.round(Math.max(h, 1))}px`);
+        };
+        syncVh();
+        const vv = window.visualViewport;
+        vv?.addEventListener('resize', syncVh, { passive: true });
+        vv?.addEventListener('scroll', syncVh, { passive: true });
+        onCleanup(() => {
+          vv?.removeEventListener('resize', syncVh);
+          vv?.removeEventListener('scroll', syncVh);
+          html.style.removeProperty('--hg-visual-vh');
+        });
+
         return;
       }
 
@@ -180,6 +198,7 @@ export class HeroGameComponent implements OnDestroy {
       body.style.left = this.prevLeft;
       body.style.right = this.prevRight;
       body.style.width = this.prevWidth;
+      html.style.overflow = this.prevHtmlOverflow;
 
       const y = this.lockedScrollY;
       window.requestAnimationFrame(() => window.scrollTo(0, y));
@@ -195,6 +214,8 @@ export class HeroGameComponent implements OnDestroy {
     if (!this.scrollLockActive) return;
     this.scrollLockActive = false;
     const body = this.document.body;
+    const html = this.document.documentElement;
+    html.style.removeProperty('--hg-visual-vh');
     body.style.overflow = this.prevOverflow;
     body.style.touchAction = this.prevTouchAction;
     body.style.position = this.prevPosition;
@@ -202,6 +223,7 @@ export class HeroGameComponent implements OnDestroy {
     body.style.left = this.prevLeft;
     body.style.right = this.prevRight;
     body.style.width = this.prevWidth;
+    html.style.overflow = this.prevHtmlOverflow;
     window.scrollTo(0, this.lockedScrollY);
   }
 
