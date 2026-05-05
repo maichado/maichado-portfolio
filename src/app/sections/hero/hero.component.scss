@@ -352,6 +352,11 @@
 }
 
 @media (max-width: 720px) {
+  .hero {
+    flex-direction: column;
+    align-items: center;
+  }
+
   .hero__badge-slot {
     position: relative;
     bottom: auto;
@@ -359,6 +364,15 @@
     margin-top: var(--space-8);
     width: min(100%, 520px);
     z-index: 1;
+  }
+
+  .hero__scroll {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    translate: none;
+    margin-top: var(--space-10);
+    flex-shrink: 0;
   }
 }
 
