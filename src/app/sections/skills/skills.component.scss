@@ -54,7 +54,9 @@
 .skills__marquees {
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  gap: var(--space-2);
+  /* Pouco espaço entre linhas; padding mínimo para hover + máscaras laterais */
+  padding-block: var(--space-1);
   mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
 }
@@ -62,13 +64,16 @@
 .marquee {
   display: flex;
   overflow: hidden;
+  padding-block: 6px;
+  margin-block: -2px;
 }
 
 .marquee__track {
   display: flex;
   gap: var(--space-4);
   flex-shrink: 0;
-  padding-right: var(--space-4);
+  align-items: center;
+  padding: 6px var(--space-4) 6px 0;
   animation: marquee-left 38s linear infinite;
   width: max-content;
 }
@@ -114,7 +119,7 @@
   transform: translateY(-2px);
 }
 
-.marquee:hover .marquee__track,
+.marquee:has(.chip:hover) .marquee__track,
 .marquee:focus-within .marquee__track {
   animation-play-state: paused;
 }
