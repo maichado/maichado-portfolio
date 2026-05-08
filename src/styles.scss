@@ -70,15 +70,19 @@
   --content-max: 78rem;
   --section-pad-y: clamp(5rem, 12vw, 9rem);
 
-  // Cursor (custom — moldura cantoneiras + pivô; nomes alinhados a cursor.component.scss)
-  --cursor-frame: 21px;
-  --cursor-bracket: 6px;
-  --cursor-bracket-hover: 8px;
-  --cursor-pivot: 2px;
-
   // Reactive grid (atualizado por mousemove no hero)
   --hero-mx: 50%;
   --hero-my: 50%;
+
+  /* Ponteiro “clique”: fallback; em pointer:fine o @media abaixo usa o PNG accent */
+  --cursor-pointer-accent: pointer;
+
+  /* Scrollbar — variante branca (thumb claro / trilho invisível) */
+  --scrollbar-thumb: color-mix(in srgb, #ffffff 38%, transparent);
+  --scrollbar-thumb-strong: color-mix(in srgb, #ffffff 72%, transparent);
+  --scrollbar-thumb-border: color-mix(in srgb, #ffffff 18%, transparent);
+  --scrollbar-thumb-glow: color-mix(in srgb, #ffffff 12%, transparent);
+  --scrollbar-track: color-mix(in srgb, var(--color-bg) 92%, transparent);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -99,6 +103,11 @@ html {
   scroll-behavior: smooth;
   color-scheme: dark;
   -webkit-text-size-adjust: 100%;
+  /* Evita “pulo” horizontal quando a barra aparece (modelo mais atual de layout) */
+  scrollbar-gutter: stable;
+  /* Firefox — thumb branco translúcido + trilho invisível */
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -119,21 +128,39 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+/* Barra de rolagem — variante branca (Chromium / Safari) */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: var(--radius-full);
+  background: var(--scrollbar-thumb);
+  box-shadow:
+    inset 0 0 0 1px var(--scrollbar-thumb-border),
+    0 0 12px var(--scrollbar-thumb-glow);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-strong);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, #ffffff 32%, transparent),
+    0 0 18px color-mix(in srgb, #ffffff 22%, transparent);
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
 img,
 video {
   max-width: 100%;
   height: auto;
-}
-
-@media (pointer: fine) {
-  body.is-custom-cursor {
-    cursor: none;
-  }
-  body.is-custom-cursor a,
-  body.is-custom-cursor button,
-  body.is-custom-cursor [data-cursor] {
-    cursor: none;
-  }
 }
 
 h1,
@@ -154,10 +181,57 @@ a {
 
 button {
   font-family: inherit;
-  cursor: pointer;
+  cursor: var(--cursor-pointer-accent);
   background: transparent;
   border: 0;
   color: inherit;
+}
+
+@media (pointer: fine) {
+  /* Ponteiro custom (~--color-accent); PNG em src/assets/cursors/, hotspot 2 1. Textos herdam o mesmo (sem I-beam). */
+  :root {
+    --cursor-pointer-accent: url('./assets/cursors/cursor-pointer-accent.png') 2 1, pointer;
+  }
+
+  body {
+    cursor: var(--cursor-pointer-accent);
+  }
+
+  app-hero-game,
+  .hg {
+    cursor: var(--cursor-pointer-accent);
+  }
+
+  a,
+  button:not(:disabled),
+  summary,
+  select,
+  label[for],
+  [role='button'] {
+    cursor: var(--cursor-pointer-accent);
+  }
+
+  input:not([readonly]):where(
+      [type='text'],
+      [type='email'],
+      [type='search'],
+      [type='tel'],
+      [type='url'],
+      [type='password'],
+      [type='number']
+    ),
+  textarea {
+    cursor: var(--cursor-pointer-accent);
+  }
+
+  input:where([type='checkbox'], [type='radio'], [type='range'], [type='file']) {
+    cursor: var(--cursor-pointer-accent);
+  }
+
+  button:disabled,
+  a[aria-disabled='true'] {
+    cursor: not-allowed;
+  }
 }
 
 :focus-visible {

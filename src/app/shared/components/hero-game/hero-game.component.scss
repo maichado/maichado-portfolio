@@ -106,7 +106,7 @@
   border: 1px solid color-mix(in srgb, var(--color-accent) 35%, var(--color-border));
   background: color-mix(in srgb, var(--color-accent-soft) 80%, transparent);
   color: var(--color-accent);
-  cursor: pointer;
+  cursor: var(--cursor-pointer-accent);
   transition:
     background var(--duration-base) var(--ease-out-quint),
     color var(--duration-base) var(--ease-out-quint),
@@ -134,7 +134,7 @@
   font-size: 0.58rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  cursor: pointer;
+  cursor: var(--cursor-pointer-accent);
   transition:
     border-color var(--duration-base) var(--ease-out-quint),
     color var(--duration-base) var(--ease-out-quint),
@@ -222,7 +222,7 @@
   background: rgba(2, 4, 8, 0.72);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  /* Acima do header fixo (9000), cursor e overlay de menu */
+  /* Acima do header fixo (9000) e overlay de menu */
   z-index: 11000;
   overscroll-behavior: none;
   touch-action: none;
@@ -303,7 +303,7 @@
   border: 1px solid var(--color-border);
   background: color-mix(in srgb, var(--color-surface) 60%, transparent);
   color: var(--color-text-muted);
-  cursor: pointer;
+  cursor: var(--cursor-pointer-accent);
   transition:
     color var(--duration-base) var(--ease-out-quint),
     border-color var(--duration-base) var(--ease-out-quint),
@@ -375,7 +375,7 @@
   font-size: 0.65rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  cursor: pointer;
+  cursor: var(--cursor-pointer-accent);
   transition:
     border-color var(--duration-base) var(--ease-out-quint),
     color var(--duration-base) var(--ease-out-quint),
@@ -405,7 +405,7 @@
   font-size: 0.65rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  cursor: pointer;
+  cursor: var(--cursor-pointer-accent);
   transition:
     border-color var(--duration-base) var(--ease-out-quint),
     color var(--duration-base) var(--ease-out-quint),

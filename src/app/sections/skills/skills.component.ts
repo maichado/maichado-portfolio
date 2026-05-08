@@ -65,13 +65,75 @@ export class SkillsComponent implements OnDestroy {
       const zone = this.marqueesZone()?.nativeElement;
       if (!zone) return;
 
+      // #region agent log
+      const __agentPost = (
+        hypothesisId: string,
+        location: string,
+        message: string,
+        data: Record<string, unknown>,
+      ) => {
+        fetch('http://127.0.0.1:7553/ingest/688feb5b-3217-4be4-b162-4dbd0223a087', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Debug-Session-Id': 'a8737a',
+          },
+          body: JSON.stringify({
+            sessionId: 'a8737a',
+            hypothesisId,
+            location,
+            message,
+            data,
+            timestamp: Date.now(),
+          }),
+        }).catch(() => {});
+      };
+      const __rect = zone.getBoundingClientRect();
+      const __rm = window.matchMedia('(prefers-reduced-motion: reduce)');
+      __agentPost('H3', 'skills.component.ts:init', 'marqueeZone mount + prefs', {
+        reducedMotion: __rm.matches,
+        zoneW: __rect.width,
+        zoneH: __rect.height,
+      });
+      // #endregion agent log
+
       this.marqueeObserver = new IntersectionObserver(
         ([e]) => {
+          // #region agent log
+          const interacting = !!(e?.isIntersecting ?? false);
+          __agentPost('H1', 'skills.component.ts:io', 'IntersectionObserver', {
+            isIntersecting: interacting,
+            ratio: e?.intersectionRatio,
+            pausedWillBe: !interacting,
+          });
+          // #endregion agent log
           this.marqueePaused.set(!(e?.isIntersecting ?? false));
         },
         { rootMargin: '60px', threshold: 0 },
       );
       this.marqueeObserver.observe(zone);
+
+      // Amostragem tardia do estado efetivo de animação/CSS (instrumentação apenas)
+      // #region agent log
+      window.setTimeout(() => {
+        const tracks = zone.querySelectorAll<HTMLElement>('.marquee__track');
+        const section = zone.closest('.skills');
+        tracks.forEach((el, idx) => {
+          const cs = getComputedStyle(el);
+          __agentPost('H2', 'skills.component.ts:sample', `track[${idx}] computed`, {
+            animationName: cs.animationName,
+            animationPlayState: cs.animationPlayState,
+            animationDuration: cs.animationDuration,
+            transform: cs.transform,
+            scrollW: el.scrollWidth,
+          });
+        });
+        __agentPost('H5', 'skills.component.ts:sample', 'section flags', {
+          hasPausedClass: section?.classList.contains('skills--marquee-paused') ?? null,
+          signalPaused: this.marqueePaused(),
+        });
+      }, 2100);
+      // #endregion agent log
     });
   }
 
